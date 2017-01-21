@@ -29,17 +29,9 @@ if(mysqli_query($conn,$sql)){
   echo "Error connecting to database : ".$dbname." with user : ".$username." ".mysqli_error($conn)."\r\n\n";
 }
 
-//drops database
-$sql="DROP DATABASE ".$dbname;
-if(mysqli_query($conn,$sql)){
-  echo "Dropped database : ".$dbname." successfully\r\n";
-}else{
-  echo "Error dropping database : ".$dbname." ".mysqli_error($conn)."\r\n\n";
-}
-
 //creates tables
 $tbname="names";
-$sql="CREATE TABLE '".$tbname."'(
+$sql="CREATE TABLE ".$tbname."(
   cid int AUTO_INCREMENT,
   cname varchar(255) NOT NULL UNIQUE,
   PRIMARY KEY(cid)
@@ -49,6 +41,15 @@ if(mysqli_query($conn,$sql)){
 }else{
   echo "Table : ".$tbname." not created ".mysqli_error($conn)."\r\n";
 }
+
+//drops database
+$sql="DROP DATABASE ".$dbname;
+if(mysqli_query($conn,$sql)){
+  echo "Dropped database : ".$dbname." successfully\r\n";
+}else{
+  echo "Error dropping database : ".$dbname." ".mysqli_error($conn)."\r\n\n";
+}
+
 //closes connection
 mysqli_close($conn);
 echo "Succesfully Closed MYSQL Connection\r\n\n";
