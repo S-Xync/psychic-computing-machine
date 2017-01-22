@@ -222,6 +222,188 @@ echo "Table : ".$tbname." created successfully\r\n";
 echo "Table : ".$tbname." not created ".mysqli_error($conn)."\r\n";
 }
 
+//years
+$tbname="years";
+$sql="CREATE TABLE ".$tbname."(
+id int NOT NULL UNIQUE,
+'year' year NOT NULL,
+FOREIGN KEY (id) REFERENCES names(id)
+)";
+if(mysqli_query($conn,$sql)){
+echo "Table : ".$tbname." created successfully\r\n";
+}else{
+echo "Table : ".$tbname." not created ".mysqli_error($conn)."\r\n";
+}
+
+//segment_names
+$tbname="segment_names";
+$sql="CREATE TABLE ".$tbname."(
+segment_id int AUTO_INCREMENT,
+segment_name varchar(255) NOT NULL UNIQUE,
+PRIMARY KEY (segment_id)
+)";
+if(mysqli_query($conn,$sql)){
+echo "Table : ".$tbname." created successfully\r\n";
+}else{
+echo "Table : ".$tbname." not created ".mysqli_error($conn)."\r\n";
+}
+
+//segments
+$tbname="segments";
+$sql="CREATE TABLE ".$tbname."(
+id int NOT NULL UNIQUE,
+segment_id int NOT NULL,
+FOREIGN KEY (id) REFERENCES names(id),
+FOREIGN KEY (segment_id) REFERENCES segment_names(segment_id)
+)";
+if(mysqli_query($conn,$sql)){
+echo "Table : ".$tbname." created successfully\r\n";
+}else{
+echo "Table : ".$tbname." not created ".mysqli_error($conn)."\r\n";
+}
+
+//core_counts
+$tbname="core_count";
+$sql="CREATE TABLE ".$tbname."(
+id int NOT NULL UNIQUE,
+core_count int NOT NULL,
+FOREIGN KEY (id) REFERENCES names(id),
+CHECK(cores>0)
+)";
+if(mysqli_query($conn,$sql)){
+echo "Table : ".$tbname." created successfully\r\n";
+}else{
+echo "Table : ".$tbname." not created ".mysqli_error($conn)."\r\n";
+}
+
+//extra_core_counts
+$tbname="extra_cores";
+$sql="CREATE TABLE ".$tbname."(
+id int NOT NULL UNIQUE,
+extra_core_count int NOT NULL,
+FOREIGN KEY (id) REFERENCES names(id),
+CHECK(extra_cores>=0)
+)";
+if(mysqli_query($conn,$sql)){
+echo "Table : ".$tbname." created successfully\r\n";
+}else{
+echo "Table : ".$tbname." not created ".mysqli_error($conn)."\r\n";
+}
+
+//rmax_values
+$tbname="rmax_values";
+$sql="CREATE TABLE ".$tbname."(
+id int NOT NULL UNIQUE,
+rmax_value real NOT NULL,
+FOREIGN KEY (id) REFERENCES names(id),
+CHECK(rmax_value>0)
+)";
+if(mysqli_query($conn,$sql)){
+echo "Table : ".$tbname." created successfully\r\n";
+}else{
+echo "Table : ".$tbname." not created ".mysqli_error($conn)."\r\n";
+}
+
+//rpeak_values
+$tbname="rpeak_values";
+$sql="CREATE TABLE ".$tbname."(
+id int NOT NULL UNIQUE,
+rpeak_value real NOT NULL,
+FOREIGN KEY (id) REFERENCES names(id),
+CHECK(rpeak_value>0)
+)";
+if(mysqli_query($conn,$sql)){
+echo "Table : ".$tbname." created successfully\r\n";
+}else{
+echo "Table : ".$tbname." not created ".mysqli_error($conn)."\r\n";
+}
+
+//nmax_values
+$tbname="nmax_values";
+$sql="CREATE TABLE ".$tbname."(
+id int NOT NULL UNIQUE,
+nmax_value real NOT NULL,
+FOREIGN KEY (id) REFERENCES names(id),
+CHECK(nmax_value>=0)
+)";
+if(mysqli_query($conn,$sql)){
+echo "Table : ".$tbname." created successfully\r\n";
+}else{
+echo "Table : ".$tbname." not created ".mysqli_error($conn)."\r\n";
+}
+
+//nhalf_values
+$tbname="nhalf_values";
+$sql="CREATE TABLE ".$tbname."(
+id int NOT NULL UNIQUE,
+nhalf_value real NOT NULL,
+FOREIGN KEY (id) REFERENCES names(id),
+CHECK(nhalf_value>=0)
+)";
+if(mysqli_query($conn,$sql)){
+echo "Table : ".$tbname." created successfully\r\n";
+}else{
+echo "Table : ".$tbname." not created ".mysqli_error($conn)."\r\n";
+}
+
+//power_values
+$tbname="power_values";
+$sql="CREATE TABLE ".$tbname."(
+id int NOT NULL UNIQUE,
+power_value real NOT NULL,
+FOREIGN KEY (id) REFERENCES names(id),
+CHECK(power_value>0)
+)";
+if(mysqli_query($conn,$sql)){
+echo "Table : ".$tbname." created successfully\r\n";
+}else{
+echo "Table : ".$tbname." not created ".mysqli_error($conn)."\r\n";
+}
+
+//power_source_names
+$tbname="power_source_names"
+$sql="CREATE TABLE ".$tbname."(
+power_source_id int AUTO_INCREMENT,
+power_source_name varchar(255) NOT NULL UNIQUE,
+PRIMARY KEY (power_source_id)
+)";
+if(mysqli_query($conn,$sql)){
+echo "Table : ".$tbname." created successfully\r\n";
+}else{
+echo "Table : ".$tbname." not created ".mysqli_error($conn)."\r\n";
+}
+
+//power_sources
+$tbname="power_sources"
+$sql="CREATE TABLE ".$tbname."(
+id int NOT NULL UNIQUE,
+power_source_id int NOT NULL,
+FOREIGN KEY (id) REFERENCES names(id),
+FOREIGN KEY (power_source_id) REFERENCES power_source_names(power_source_id)
+)";
+if(mysqli_query($conn,$sql)){
+echo "Table : ".$tbname." created successfully\r\n";
+}else{
+echo "Table : ".$tbname." not created ".mysqli_error($conn)."\r\n";
+}
+
+//mfpw_values
+//mfpw --> mflops per watt
+$tbname="mfpw_values";
+$sql="CREATE TABLE ".$tbname."(
+id int NOT NULL UNIQUE,
+mfpw_value real NOT NULL,
+FOREIGN KEY (id) REFERENCES names(id),
+CHECK(mfpw_value>0)
+)";
+if(mysqli_query($conn,$sql)){
+echo "Table : ".$tbname." created successfully\r\n";
+}else{
+echo "Table : ".$tbname." not created ".mysqli_error($conn)."\r\n";
+}
+
+
+
 
 
 
