@@ -226,7 +226,7 @@ echo "Table : ".$tbname." not created ".mysqli_error($conn)."\r\n";
 $tbname="years";
 $sql="CREATE TABLE ".$tbname."(
 id int NOT NULL UNIQUE,
-'year' year NOT NULL,
+year year NOT NULL,
 FOREIGN KEY (id) REFERENCES names(id)
 )";
 if(mysqli_query($conn,$sql)){
@@ -361,7 +361,7 @@ echo "Table : ".$tbname." not created ".mysqli_error($conn)."\r\n";
 }
 
 //power_source_names
-$tbname="power_source_names"
+$tbname="power_source_names";
 $sql="CREATE TABLE ".$tbname."(
 power_source_id int AUTO_INCREMENT,
 power_source_name varchar(255) NOT NULL UNIQUE,
@@ -374,7 +374,7 @@ echo "Table : ".$tbname." not created ".mysqli_error($conn)."\r\n";
 }
 
 //power_sources
-$tbname="power_sources"
+$tbname="power_sources";
 $sql="CREATE TABLE ".$tbname."(
 id int NOT NULL UNIQUE,
 power_source_id int NOT NULL,
