@@ -1,4 +1,3 @@
-//changing this whole file with just this comment committed
 <?php
 $server="localhost";
 $username="myuser";
@@ -32,11 +31,13 @@ echo "Error connecting to database : ".$dbname." with user : ".$username." ".mys
 
 //creates tables
 
-//names
-$tbname="names";
+//start first table
+
+//machines
+$tbname="machines";
 $sql="CREATE TABLE ".$tbname."(
 id int AUTO_INCREMENT,
-name varchar(255) NOT NULL UNIQUE,
+machine_name varchar(255) NOT NULL UNIQUE,
 PRIMARY KEY(id)
 )";
 if(mysqli_query($conn,$sql)){
@@ -45,69 +46,21 @@ echo "Table : ".$tbname." created successfully\r\n";
 echo "Table : ".$tbname." not created ".mysqli_error($conn)."\r\n";
 }
 
-//green_ranks
-$tbname="green_ranks";
-$sql="CREATE TABLE ".$tbname."(
-id int NOT NULL UNIQUE,
-green_rank int NOT NULL UNIQUE,
-CHECK(green_rank>0),
-FOREIGN KEY (id) REFERENCES names(id)
-)";
-if(mysqli_query($conn,$sql)){
-echo "Table : ".$tbname." created successfully\r\n";
-}else{
-echo "Table : ".$tbname." not created ".mysqli_error($conn)."\r\n";
-}
+//end of first table
+
+//start of second table
 
 //ranks
 $tbname="ranks";
 $sql="CREATE TABLE ".$tbname."(
 id int NOT NULL UNIQUE,
+green_rank int NOT NULL UNIQUE,
 rank int NOT NULL UNIQUE,
-CHECK(rank>0),
-FOREIGN KEY (id) REFERENCES names(id)
-)";
-if(mysqli_query($conn,$sql)){
-echo "Table : ".$tbname." created successfully\r\n";
-}else{
-echo "Table : ".$tbname." not created ".mysqli_error($conn)."\r\n";
-}
-
-//previous_ranks
-$tbname="previous_ranks";
-$sql="CREATE TABLE ".$tbname."(
-id int NOT NULL UNIQUE,
 previous_rank int,
-CHECK(previous_rank>0),
-FOREIGN KEY (id) REFERENCES names(id)
-)";
-if(mysqli_query($conn,$sql)){
-echo "Table : ".$tbname." created successfully\r\n";
-}else{
-echo "Table : ".$tbname." not created ".mysqli_error($conn)."\r\n";
-}
-
-//first_appearances
-$tbname="first_appearances";
-$sql="CREATE TABLE ".$tbname."(
-id int NOT NULL UNIQUE,
 first_appearance int NOT NULL,
-CHECK(first_appearance>0),
-FOREIGN KEY (id) REFERENCES names(id)
-)";
-if(mysqli_query($conn,$sql)){
-echo "Table : ".$tbname." created successfully\r\n";
-}else{
-echo "Table : ".$tbname." not created ".mysqli_error($conn)."\r\n";
-}
-
-//first_ranks
-$tbname="first_ranks";
-$sql="CREATE TABLE ".$tbname."(
-id int NOT NULL UNIQUE,
 first_rank int NOT NULL,
-CHECK(first_rank>0),
-FOREIGN KEY (id) REFERENCES names(id)
+FOREIGN KEY (id) REFERENCES names(id),
+CHECK(green_rank>0 AND rank>0 AND previous_rank>0 AND first_appearance AND first_rank>0)
 )";
 if(mysqli_query($conn,$sql)){
 echo "Table : ".$tbname." created successfully\r\n";
@@ -115,8 +68,12 @@ echo "Table : ".$tbname." created successfully\r\n";
 echo "Table : ".$tbname." not created ".mysqli_error($conn)."\r\n";
 }
 
-//computer_names
-$tbname="computer_names";
+//end of second table
+
+//start of third table
+
+//computers
+$tbname="computers";
 $sql="CREATE TABLE ".$tbname."(
 computer_id int AUTO_INCREMENT,
 computer_name varchar(255) NOT NULL UNIQUE,
@@ -128,22 +85,8 @@ echo "Table : ".$tbname." created successfully\r\n";
 echo "Table : ".$tbname." not created ".mysqli_error($conn)."\r\n";
 }
 
-//computers
-$tbname="computers";
-$sql="CREATE TABLE ".$tbname."(
-id int NOT NULL UNIQUE,
-computer_id int NOT NULL,
-FOREIGN KEY (id) REFERENCES names(id),
-FOREIGN KEY (computer_id) REFERENCES computer_names(computer_id)
-)";
-if(mysqli_query($conn,$sql)){
-echo "Table : ".$tbname." created successfully\r\n";
-}else{
-echo "Table : ".$tbname." not created ".mysqli_error($conn)."\r\n";
-}
-
-//site_names
-$tbname="site_names";
+//sites
+$tbname="sites";
 $sql="CREATE TABLE ".$tbname."(
 site_id int AUTO_INCREMENT,
 site_name varchar(255) NOT NULL UNIQUE,
@@ -155,22 +98,8 @@ echo "Table : ".$tbname." created successfully\r\n";
 echo "Table : ".$tbname." not created ".mysqli_error($conn)."\r\n";
 }
 
-//sites
-$tbname="sites";
-$sql="CREATE TABLE ".$tbname."(
-id int NOT NULL UNIQUE,
-site_id int NOT NULL,
-FOREIGN KEY (id) REFERENCES names(id),
-FOREIGN KEY (site_id) REFERENCES site_names(site_id)
-)";
-if(mysqli_query($conn,$sql)){
-echo "Table : ".$tbname." created successfully\r\n";
-}else{
-echo "Table : ".$tbname." not created ".mysqli_error($conn)."\r\n";
-}
-
-//manufacturer_names
-$tbname="manufacturer_names";
+//manufacturers
+$tbname="manufacturers";
 $sql="CREATE TABLE ".$tbname."(
 manufacturer_id int AUTO_INCREMENT,
 manufacturer_name varchar(255) NOT NULL UNIQUE,
@@ -182,22 +111,8 @@ echo "Table : ".$tbname." created successfully\r\n";
 echo "Table : ".$tbname." not created ".mysqli_error($conn)."\r\n";
 }
 
-//manufacturers
-$tbname="manufacturers";
-$sql="CREATE TABLE ".$tbname."(
-id int NOT NULL UNIQUE,
-manufacturer_id int NOT NULL,
-FOREIGN KEY (id) REFERENCES names(id),
-FOREIGN KEY (manufacturer_id) REFERENCES manufacturer_names(manufacturer_id)
-)";
-if(mysqli_query($conn,$sql)){
-echo "Table : ".$tbname." created successfully\r\n";
-}else{
-echo "Table : ".$tbname." not created ".mysqli_error($conn)."\r\n";
-}
-
-//country_names
-$tbname="country_names";
+//countries
+$tbname="countries";
 $sql="CREATE TABLE ".$tbname."(
 country_id int AUTO_INCREMENT,
 country_name varchar(255) NOT NULL UNIQUE,
@@ -209,35 +124,8 @@ echo "Table : ".$tbname." created successfully\r\n";
 echo "Table : ".$tbname." not created ".mysqli_error($conn)."\r\n";
 }
 
-//countries
-$tbname="countries";
-$sql="CREATE TABLE ".$tbname."(
-id int NOT NULL UNIQUE,
-country_id int NOT NULL,
-FOREIGN KEY (id) REFERENCES names(id),
-FOREIGN KEY (country_id) REFERENCES country_names(country_id)
-)";
-if(mysqli_query($conn,$sql)){
-echo "Table : ".$tbname." created successfully\r\n";
-}else{
-echo "Table : ".$tbname." not created ".mysqli_error($conn)."\r\n";
-}
-
-//years
-$tbname="years";
-$sql="CREATE TABLE ".$tbname."(
-id int NOT NULL UNIQUE,
-year year NOT NULL,
-FOREIGN KEY (id) REFERENCES names(id)
-)";
-if(mysqli_query($conn,$sql)){
-echo "Table : ".$tbname." created successfully\r\n";
-}else{
-echo "Table : ".$tbname." not created ".mysqli_error($conn)."\r\n";
-}
-
-//segment_names
-$tbname="segment_names";
+//segments
+$tbname="segments";
 $sql="CREATE TABLE ".$tbname."(
 segment_id int AUTO_INCREMENT,
 segment_name varchar(255) NOT NULL UNIQUE,
@@ -249,13 +137,12 @@ echo "Table : ".$tbname." created successfully\r\n";
 echo "Table : ".$tbname." not created ".mysqli_error($conn)."\r\n";
 }
 
-//segments
-$tbname="segments";
+//regions
+$tbname="regions";
 $sql="CREATE TABLE ".$tbname."(
-id int NOT NULL UNIQUE,
-segment_id int NOT NULL,
-FOREIGN KEY (id) REFERENCES names(id),
-FOREIGN KEY (segment_id) REFERENCES segment_names(segment_id)
+region_id int AUTO_INCREMENT,
+region_name varchar(255) NOT NULL UNIQUE,
+PRIMARY KEY (region_id)
 )";
 if(mysqli_query($conn,$sql)){
 echo "Table : ".$tbname." created successfully\r\n";
@@ -263,13 +150,12 @@ echo "Table : ".$tbname." created successfully\r\n";
 echo "Table : ".$tbname." not created ".mysqli_error($conn)."\r\n";
 }
 
-//core_counts
-$tbname="core_count";
+//continents
+$tbname="continents";
 $sql="CREATE TABLE ".$tbname."(
-id int NOT NULL UNIQUE,
-core_count int NOT NULL,
-FOREIGN KEY (id) REFERENCES names(id),
-CHECK(cores>0)
+continent_id int AUTO_INCREMENT,
+continent_name varchar(255) NOT NULL UNIQUE,
+PRIMARY KEY (continent_id)
 )";
 if(mysqli_query($conn,$sql)){
 echo "Table : ".$tbname." created successfully\r\n";
@@ -277,92 +163,8 @@ echo "Table : ".$tbname." created successfully\r\n";
 echo "Table : ".$tbname." not created ".mysqli_error($conn)."\r\n";
 }
 
-//extra_core_counts
-$tbname="extra_cores";
-$sql="CREATE TABLE ".$tbname."(
-id int NOT NULL UNIQUE,
-extra_core_count int NOT NULL,
-FOREIGN KEY (id) REFERENCES names(id),
-CHECK(extra_cores>=0)
-)";
-if(mysqli_query($conn,$sql)){
-echo "Table : ".$tbname." created successfully\r\n";
-}else{
-echo "Table : ".$tbname." not created ".mysqli_error($conn)."\r\n";
-}
-
-//rmax_values
-$tbname="rmax_values";
-$sql="CREATE TABLE ".$tbname."(
-id int NOT NULL UNIQUE,
-rmax_value real NOT NULL,
-FOREIGN KEY (id) REFERENCES names(id),
-CHECK(rmax_value>0)
-)";
-if(mysqli_query($conn,$sql)){
-echo "Table : ".$tbname." created successfully\r\n";
-}else{
-echo "Table : ".$tbname." not created ".mysqli_error($conn)."\r\n";
-}
-
-//rpeak_values
-$tbname="rpeak_values";
-$sql="CREATE TABLE ".$tbname."(
-id int NOT NULL UNIQUE,
-rpeak_value real NOT NULL,
-FOREIGN KEY (id) REFERENCES names(id),
-CHECK(rpeak_value>0)
-)";
-if(mysqli_query($conn,$sql)){
-echo "Table : ".$tbname." created successfully\r\n";
-}else{
-echo "Table : ".$tbname." not created ".mysqli_error($conn)."\r\n";
-}
-
-//nmax_values
-$tbname="nmax_values";
-$sql="CREATE TABLE ".$tbname."(
-id int NOT NULL UNIQUE,
-nmax_value real NOT NULL,
-FOREIGN KEY (id) REFERENCES names(id),
-CHECK(nmax_value>=0)
-)";
-if(mysqli_query($conn,$sql)){
-echo "Table : ".$tbname." created successfully\r\n";
-}else{
-echo "Table : ".$tbname." not created ".mysqli_error($conn)."\r\n";
-}
-
-//nhalf_values
-$tbname="nhalf_values";
-$sql="CREATE TABLE ".$tbname."(
-id int NOT NULL UNIQUE,
-nhalf_value real NOT NULL,
-FOREIGN KEY (id) REFERENCES names(id),
-CHECK(nhalf_value>=0)
-)";
-if(mysqli_query($conn,$sql)){
-echo "Table : ".$tbname." created successfully\r\n";
-}else{
-echo "Table : ".$tbname." not created ".mysqli_error($conn)."\r\n";
-}
-
-//power_values
-$tbname="power_values";
-$sql="CREATE TABLE ".$tbname."(
-id int NOT NULL UNIQUE,
-power_value real NOT NULL,
-FOREIGN KEY (id) REFERENCES names(id),
-CHECK(power_value>0)
-)";
-if(mysqli_query($conn,$sql)){
-echo "Table : ".$tbname." created successfully\r\n";
-}else{
-echo "Table : ".$tbname." not created ".mysqli_error($conn)."\r\n";
-}
-
-//power_source_names
-$tbname="power_source_names";
+//power_sources
+$tbname="power_sources";
 $sql="CREATE TABLE ".$tbname."(
 power_source_id int AUTO_INCREMENT,
 power_source_name varchar(255) NOT NULL UNIQUE,
@@ -374,28 +176,48 @@ echo "Table : ".$tbname." created successfully\r\n";
 echo "Table : ".$tbname." not created ".mysqli_error($conn)."\r\n";
 }
 
-//power_sources
-$tbname="power_sources";
+//details
+$tbname="details";
 $sql="CREATE TABLE ".$tbname."(
 id int NOT NULL UNIQUE,
+computer_id int NOT NULL,
+site_id int NOT NULL,
+manufacturer_id int NOT NULL,
+country_id int NOT NULL,
+region_id int NOT NULL,
+continent_id int NOT NULL,
+year year NOT NULL,
+segment_id int NOT NULL,
 power_source_id int NOT NULL,
-FOREIGN KEY (id) REFERENCES names(id),
-FOREIGN KEY (power_source_id) REFERENCES power_source_names(power_source_id)
+FOREIGN KEY (id) REFERENCES machines(id),
+FOREIGN KEY (computer_id) REFERENCES computers(computer_id),
+FOREIGN KEY (site_id) REFERENCES sites(site_id),
+FOREIGN KEY (manufacturer_id) REFERENCES manufacturers(manufacturer_id),
+FOREIGN KEY (country_id) REFERENCES countries(country_id),
+FOREIGN KEY (region_id) REFERENCES regions(region_id),
+FOREIGN KEY (continent_id) REFERENCES continents(continent_id),
+FOREIGN KEY (segment_id) REFERENCES segments(segment_id),
+FOREIGN KEY (power_source_id) REFERENCES power_sources(power_source_id)
 )";
-if(mysqli_query($conn,$sql)){
-echo "Table : ".$tbname." created successfully\r\n";
-}else{
-echo "Table : ".$tbname." not created ".mysqli_error($conn)."\r\n";
-}
 
-//mfpw_values
-//mfpw --> mflops per watt
-$tbname="mfpw_values";
+//end of third table
+
+//start of fourth table
+
+//numbers
+$tbname="numbers";
 $sql="CREATE TABLE ".$tbname."(
 id int NOT NULL UNIQUE,
-mfpw_value real NOT NULL,
-FOREIGN KEY (id) REFERENCES names(id),
-CHECK(mfpw_value>0)
+total_cores int NOT NULL,
+accelerator_cores int NOT NULL,
+rmax real NOT NULL,
+rpeak real NOT NULL,
+nmax real NOT NULL,
+nhalf real NOT NULL,
+power real NOT NULL,
+mflops_per_watt real NOT NULL,
+FOREIGN KEY (id) REFERENCES machines(id),
+CHECK(total_cores>0 AND accelerator_cores>=0 AND rmax>0 AND rpeak>0 AND namx>=0 AND nmax>=0 AND power>0 AND mflops_per_watt>0)
 )";
 if(mysqli_query($conn,$sql)){
 echo "Table : ".$tbname." created successfully\r\n";
@@ -403,8 +225,191 @@ echo "Table : ".$tbname." created successfully\r\n";
 echo "Table : ".$tbname." not created ".mysqli_error($conn)."\r\n";
 }
 
+//end of fourth table
 
+//start of fifth table
 
+//architectures
+$tbname="architectures";
+$sql="CREATE TABLE ".$tbname."(
+architecture_id int AUTO_INCREMENT,
+architecture_name varchar(255) NOT NULL UNIQUE,
+PRIMARY KEY (architecture_id)
+)";
+if(mysqli_query($conn,$sql)){
+echo "Table : ".$tbname." created successfully\r\n";
+}else{
+echo "Table : ".$tbname." not created ".mysqli_error($conn)."\r\n";
+}
+
+//sites
+$tbname="processors";
+$sql="CREATE TABLE ".$tbname."(
+processor_id int AUTO_INCREMENT,
+processor_name varchar(255) NOT NULL UNIQUE,
+PRIMARY KEY (processor_id)
+)";
+if(mysqli_query($conn,$sql)){
+echo "Table : ".$tbname." created successfully\r\n";
+}else{
+echo "Table : ".$tbname." not created ".mysqli_error($conn)."\r\n";
+}
+
+//processor_technologies
+$tbname="processor_technologies";
+$sql="CREATE TABLE ".$tbname."(
+processor_technology_id int AUTO_INCREMENT,
+processor_technology_name varchar(255) NOT NULL UNIQUE,
+PRIMARY KEY (processor_technology_id)
+)";
+if(mysqli_query($conn,$sql)){
+echo "Table : ".$tbname." created successfully\r\n";
+}else{
+echo "Table : ".$tbname." not created ".mysqli_error($conn)."\r\n";
+}
+
+//sites
+$tbname="operating_systems";
+$sql="CREATE TABLE ".$tbname."(
+operating_system_id int AUTO_INCREMENT,
+operating_system_name varchar(255) NOT NULL UNIQUE,
+PRIMARY KEY (operating_system_id)
+)";
+if(mysqli_query($conn,$sql)){
+echo "Table : ".$tbname." created successfully\r\n";
+}else{
+echo "Table : ".$tbname." not created ".mysqli_error($conn)."\r\n";
+}
+
+//operating_system_families
+$tbname="operating_system_families";
+$sql="CREATE TABLE ".$tbname."(
+operating_system_family_id int AUTO_INCREMENT,
+operating_system_family_name varchar(255) NOT NULL UNIQUE,
+PRIMARY KEY (operating_system_family_id)
+)";
+if(mysqli_query($conn,$sql)){
+echo "Table : ".$tbname." created successfully\r\n";
+}else{
+echo "Table : ".$tbname." not created ".mysqli_error($conn)."\r\n";
+}
+
+//accelerators
+$tbname="accelerators";
+$sql="CREATE TABLE ".$tbname."(
+accelerator_id int AUTO_INCREMENT,
+accelerator_name varchar(255) NOT NULL UNIQUE,
+PRIMARY KEY (accelerator_id)
+)";
+if(mysqli_query($conn,$sql)){
+echo "Table : ".$tbname." created successfully\r\n";
+}else{
+echo "Table : ".$tbname." not created ".mysqli_error($conn)."\r\n";
+}
+
+//processor_generations
+$tbname="processor_generations";
+$sql="CREATE TABLE ".$tbname."(
+processor_generation_id int AUTO_INCREMENT,
+processor_generation_name varchar(255) NOT NULL UNIQUE,
+PRIMARY KEY (processor_generation_id)
+)";
+if(mysqli_query($conn,$sql)){
+echo "Table : ".$tbname." created successfully\r\n";
+}else{
+echo "Table : ".$tbname." not created ".mysqli_error($conn)."\r\n";
+}
+
+//system_models
+$tbname="system_models";
+$sql="CREATE TABLE ".$tbname."(
+system_model_id int AUTO_INCREMENT,
+system_model_name varchar(255) NOT NULL UNIQUE,
+PRIMARY KEY (system_model_id)
+)";
+if(mysqli_query($conn,$sql)){
+echo "Table : ".$tbname." created successfully\r\n";
+}else{
+echo "Table : ".$tbname." not created ".mysqli_error($conn)."\r\n";
+}
+
+//system_families
+$tbname="system_families";
+$sql="CREATE TABLE ".$tbname."(
+system_family_id int AUTO_INCREMENT,
+system_family_name varchar(255) NOT NULL UNIQUE,
+PRIMARY KEY (system_family_id)
+)";
+if(mysqli_query($conn,$sql)){
+echo "Table : ".$tbname." created successfully\r\n";
+}else{
+echo "Table : ".$tbname." not created ".mysqli_error($conn)."\r\n";
+}
+
+//interconnects
+$tbname="interconnects";
+$sql="CREATE TABLE ".$tbname."(
+interconnect_id int AUTO_INCREMENT,
+interconnect_name varchar(255) NOT NULL UNIQUE,
+PRIMARY KEY (interconnect_id)
+)";
+if(mysqli_query($conn,$sql)){
+echo "Table : ".$tbname." created successfully\r\n";
+}else{
+echo "Table : ".$tbname." not created ".mysqli_error($conn)."\r\n";
+}
+
+//interconnect_families
+$tbname="interconnect_families";
+$sql="CREATE TABLE ".$tbname."(
+interconnect_family_id int AUTO_INCREMENT,
+interconnect_family_name varchar(255) NOT NULL UNIQUE,
+PRIMARY KEY (interconnect_family_id)
+)";
+if(mysqli_query($conn,$sql)){
+echo "Table : ".$tbname." created successfully\r\n";
+}else{
+echo "Table : ".$tbname." not created ".mysqli_error($conn)."\r\n";
+}
+
+//geeky_details
+$tbname="geeky_details";
+$sql="CREATE TABLE ".$tbname."(
+id int NOT NULL UNIQUE,
+architecture_id int NOT NULL,
+processor_id int NOT NULL,
+processor_technology_id int NOT NULL,
+processor_speed int NOT NULL,
+operating_system_id int NOT NULL,
+operating_system_family_id int NOT NULL,
+accelerator_id int NOT NULL,
+cores_per_socket int NOT NULL,
+processor_generation_id int NOT NULL,
+system_model_id int NOT NULL,
+system_family_id int NOT NULL,
+interconnect_id int NOT NULL,
+interconnect_family_id int NOT NULL,
+FOREIGN KEY (id) REFERENCES machines(id),
+FOREIGN KEY (architecture_id) REFERENCES architectures(architecture_id),
+FOREIGN KEY (processor_id) REFERENCES processors(processor_id),
+FOREIGN KEY (processor_technology_id) REFERENCES processor_technologies(processor_technology_id),
+FOREIGN KEY (operating_system_id) REFERENCES operating_systems(operating_system_id),
+FOREIGN KEY (operating_system_family_id) REFERENCES operating_system_families(operating_system_family_id),
+FOREIGN KEY (accelerator_id) REFERENCES accelerators(accelerator_id),
+FOREIGN KEY (processor_generation_id) REFERENCES processor_generations(processor_generation_id),
+FOREIGN KEY (system_model_id) REFERENCES system_models(system_model_id),
+FOREIGN KEY (system_family_id) REFERENCES system_families(system_family_id),
+FOREIGN KEY (interconnect_id) REFERENCES interconnects(interconnect_id),
+FOREIGN KEY (interconnect_family_id) REFERENCES interconnect_families(interconnect_family_id),
+CHECK(processor_speed>0 AND cores_per_socket>0)
+)";
+if(mysqli_query($conn,$sql)){
+echo "Table : ".$tbname." created successfully\r\n";
+}else{
+echo "Table : ".$tbname." not created ".mysqli_error($conn)."\r\n";
+}
+
+//end of fifth table
 
 
 
