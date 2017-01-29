@@ -36,9 +36,9 @@ echo "Error connecting to database : ".$dbname." with user : ".$username." ".mys
 //machines
 $tbname="machines";
 $sql="CREATE TABLE ".$tbname."(
-id int AUTO_INCREMENT,
+machine_id int AUTO_INCREMENT,
 machine_name varchar(255) NOT NULL UNIQUE,
-PRIMARY KEY(id)
+PRIMARY KEY(machine_id)
 )";
 if(mysqli_query($conn,$sql)){
 echo "Table : ".$tbname." created successfully\r\n";
@@ -53,13 +53,13 @@ echo "Table : ".$tbname." not created ".mysqli_error($conn)."\r\n";
 //ranks
 $tbname="ranks";
 $sql="CREATE TABLE ".$tbname."(
-id int NOT NULL UNIQUE,
+machine_id int NOT NULL UNIQUE,
 green_rank int NOT NULL UNIQUE,
 rank int NOT NULL UNIQUE,
 previous_rank int,
 first_appearance int NOT NULL,
 first_rank int NOT NULL,
-FOREIGN KEY (id) REFERENCES names(id),
+FOREIGN KEY (machine_id) REFERENCES machines(machine_id),
 CHECK(green_rank>0 AND rank>0 AND previous_rank>0 AND first_appearance AND first_rank>0)
 )";
 if(mysqli_query($conn,$sql)){
@@ -179,7 +179,7 @@ echo "Table : ".$tbname." not created ".mysqli_error($conn)."\r\n";
 //details
 $tbname="details";
 $sql="CREATE TABLE ".$tbname."(
-id int NOT NULL UNIQUE,
+machine_id int NOT NULL UNIQUE,
 computer_id int NOT NULL,
 site_id int NOT NULL,
 manufacturer_id int NOT NULL,
@@ -189,7 +189,7 @@ continent_id int NOT NULL,
 year year NOT NULL,
 segment_id int NOT NULL,
 power_source_id int NOT NULL,
-FOREIGN KEY (id) REFERENCES machines(id),
+FOREIGN KEY (machine_id) REFERENCES machines(machine_id),
 FOREIGN KEY (computer_id) REFERENCES computers(computer_id),
 FOREIGN KEY (site_id) REFERENCES sites(site_id),
 FOREIGN KEY (manufacturer_id) REFERENCES manufacturers(manufacturer_id),
@@ -207,7 +207,7 @@ FOREIGN KEY (power_source_id) REFERENCES power_sources(power_source_id)
 //numbers
 $tbname="numbers";
 $sql="CREATE TABLE ".$tbname."(
-id int NOT NULL UNIQUE,
+machine_id int NOT NULL UNIQUE,
 total_cores int NOT NULL,
 accelerator_cores int NOT NULL,
 rmax real NOT NULL,
@@ -216,7 +216,7 @@ nmax real NOT NULL,
 nhalf real NOT NULL,
 power real NOT NULL,
 mflops_per_watt real NOT NULL,
-FOREIGN KEY (id) REFERENCES machines(id),
+FOREIGN KEY (machine_id) REFERENCES machines(machine_id),
 CHECK(total_cores>0 AND accelerator_cores>=0 AND rmax>0 AND rpeak>0 AND namx>=0 AND nmax>=0 AND power>0 AND mflops_per_watt>0)
 )";
 if(mysqli_query($conn,$sql)){
@@ -375,7 +375,7 @@ echo "Table : ".$tbname." not created ".mysqli_error($conn)."\r\n";
 //geeky_details
 $tbname="geeky_details";
 $sql="CREATE TABLE ".$tbname."(
-id int NOT NULL UNIQUE,
+machine_id int NOT NULL UNIQUE,
 architecture_id int NOT NULL,
 processor_id int NOT NULL,
 processor_technology_id int NOT NULL,
@@ -389,7 +389,7 @@ system_model_id int NOT NULL,
 system_family_id int NOT NULL,
 interconnect_id int NOT NULL,
 interconnect_family_id int NOT NULL,
-FOREIGN KEY (id) REFERENCES machines(id),
+FOREIGN KEY (machine_id) REFERENCES machines(machine_id),
 FOREIGN KEY (architecture_id) REFERENCES architectures(architecture_id),
 FOREIGN KEY (processor_id) REFERENCES processors(processor_id),
 FOREIGN KEY (processor_technology_id) REFERENCES processor_technologies(processor_technology_id),
