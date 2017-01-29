@@ -1,3 +1,4 @@
+//changing this whole file with just this comment committed
 <?php
 $server="localhost";
 $username="myuser";
