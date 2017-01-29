@@ -124,19 +124,6 @@ echo "Table : ".$tbname." created successfully\r\n";
 echo "Table : ".$tbname." not created ".mysqli_error($conn)."\r\n";
 }
 
-//segments
-$tbname="segments";
-$sql="CREATE TABLE ".$tbname."(
-segment_id int AUTO_INCREMENT,
-segment_name varchar(255) NOT NULL UNIQUE,
-PRIMARY KEY (segment_id)
-)";
-if(mysqli_query($conn,$sql)){
-echo "Table : ".$tbname." created successfully\r\n";
-}else{
-echo "Table : ".$tbname." not created ".mysqli_error($conn)."\r\n";
-}
-
 //regions
 $tbname="regions";
 $sql="CREATE TABLE ".$tbname."(
@@ -156,6 +143,19 @@ $sql="CREATE TABLE ".$tbname."(
 continent_id int AUTO_INCREMENT,
 continent_name varchar(255) NOT NULL UNIQUE,
 PRIMARY KEY (continent_id)
+)";
+if(mysqli_query($conn,$sql)){
+echo "Table : ".$tbname." created successfully\r\n";
+}else{
+echo "Table : ".$tbname." not created ".mysqli_error($conn)."\r\n";
+}
+
+//segments
+$tbname="segments";
+$sql="CREATE TABLE ".$tbname."(
+segment_id int AUTO_INCREMENT,
+segment_name varchar(255) NOT NULL UNIQUE,
+PRIMARY KEY (segment_id)
 )";
 if(mysqli_query($conn,$sql)){
 echo "Table : ".$tbname." created successfully\r\n";
@@ -242,7 +242,7 @@ echo "Table : ".$tbname." created successfully\r\n";
 echo "Table : ".$tbname." not created ".mysqli_error($conn)."\r\n";
 }
 
-//sites
+//processors
 $tbname="processors";
 $sql="CREATE TABLE ".$tbname."(
 processor_id int AUTO_INCREMENT,
@@ -268,7 +268,7 @@ echo "Table : ".$tbname." created successfully\r\n";
 echo "Table : ".$tbname." not created ".mysqli_error($conn)."\r\n";
 }
 
-//sites
+//operating_systems
 $tbname="operating_systems";
 $sql="CREATE TABLE ".$tbname."(
 operating_system_id int AUTO_INCREMENT,
