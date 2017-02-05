@@ -1,4 +1,5 @@
 <?php
+/* SaiKumar Immadi */
 $hostname = “localhost”;
 $username = “myuser”;
 $password = “mypassword”;
