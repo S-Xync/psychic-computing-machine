@@ -1,9 +1,9 @@
 <?php
 /* SaiKumar Immadi */
-$hostname = “localhost”;
+$server = “localhost”;
 $username = “myuser”;
 $password = “mypassword”;
-$database = “pcm”;
+$dbname = “pcm”;
 
 //creates connection
 $conn=mysqli_connect($server,$username,$password);
@@ -118,7 +118,13 @@ $interconnect_name = $filesop[33];
 $region_name = $filesop[34];
 $continent_name = $filesop[35];
 
-$sql = mysql_query(“INSERT INTO mytask (name, project) VALUES (‘$name’,’$project’)”);
+$sql = "INSERT INTO machines (green_rank) VALUES ($green_rank)";
+if(mysqli_query($conn,$sql)){
+
+}else{
+  echo "Error inserting rows into database ".$dbname." ".mysqli_error($conn)."\r\n\n";
+}
+$sql="SELECT machine_id FROM machine WHERE green_rank=".'$green_rank'."";
 $c = $c + 1;
 }
 
