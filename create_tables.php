@@ -35,12 +35,33 @@ echo "Error connecting to database : ".$dbname." with user : ".$username." ".mys
 //start first table
 
 //machines
-$tbname="machines";
+// $tbname="machines";
+// $sql="CREATE TABLE ".$tbname."(
+// machine_id int AUTO_INCREMENT,
+// green_rank int NOT NULL UNIQUE,
+// CHECK(green_rank>0),
+// PRIMARY KEY(machine_id)
+// )";
+// if(mysqli_query($conn,$sql)){
+// echo "Table : ".$tbname." created successfully\r\n";
+// }else{
+// echo "Table : ".$tbname." not created ".mysqli_error($conn)."\r\n";
+// }
+
+//end of first table
+
+//start of first table
+
+//ranks
+$tbname="ranks";
 $sql="CREATE TABLE ".$tbname."(
-machine_id int AUTO_INCREMENT,
-green_rank int NOT NULL UNIQUE,
-CHECK(green_rank>0),
-PRIMARY KEY(machine_id)
+green_rank int AUTO_INCREMENT,
+rank int NOT NULL UNIQUE,
+previous_rank int,
+first_appearance int NOT NULL,
+first_rank int NOT NULL,
+PRIMARY KEY (green_rank),
+CHECK(green_rank>0 AND rank>0 AND previous_rank>0 AND first_appearance AND first_rank>0)
 )";
 if(mysqli_query($conn,$sql)){
 echo "Table : ".$tbname." created successfully\r\n";
@@ -52,16 +73,21 @@ echo "Table : ".$tbname." not created ".mysqli_error($conn)."\r\n";
 
 //start of second table
 
-//ranks
-$tbname="ranks";
+//details
+$tbname="details";
 $sql="CREATE TABLE ".$tbname."(
-machine_id int NOT NULL UNIQUE,
-rank int NOT NULL UNIQUE,
-previous_rank int,
-first_appearance int NOT NULL,
-first_rank int NOT NULL,
-FOREIGN KEY (machine_id) REFERENCES machines(machine_id),
-CHECK(rank>0 AND previous_rank>0 AND first_appearance AND first_rank>0)
+green_rank int NOT NULL UNIQUE,
+machine varchar(255),
+computer varchar(255) NOT NULL,
+site varchar(255) NOT NULL,
+manufacturer varchar(255) NOT NULL,
+country varchar(255) NOT NULL,
+region varchar(255) NOT NULL,
+continent varchar(255) NOT NULL,
+year year NOT NULL,
+segment varchar(255) NOT NULL,
+power_source varchar(255) NOT NULL,
+FOREIGN KEY (green_rank) REFERENCES ranks(green_rank)
 )";
 if(mysqli_query($conn,$sql)){
 echo "Table : ".$tbname." created successfully\r\n";
@@ -73,21 +99,20 @@ echo "Table : ".$tbname." not created ".mysqli_error($conn)."\r\n";
 
 //start of third table
 
-//details
-$tbname="details";
+//numbers
+$tbname="numbers";
 $sql="CREATE TABLE ".$tbname."(
-machine_id int NOT NULL UNIQUE,
-machine varchar(255),
-computer varchar(255) NOT NULL,
-site varchar(255) NOT NULL,
-manufacturer varchar(255) NOT NULL,
-country varchar(255) NOT NULL,
-region varchar(255) NOT NULL,
-continent varchar(255) NOT NULL,
-year year NOT NULL,
-segment varchar(255) NOT NULL,
-power_source varchar(255) NOT NULL,
-FOREIGN KEY (machine_id) REFERENCES machines(machine_id)
+green_rank int NOT NULL UNIQUE,
+total_cores int NOT NULL,
+accelerator_cores int NOT NULL,
+rmax real NOT NULL,
+rpeak real NOT NULL,
+nmax real NOT NULL,
+nhalf real NOT NULL,
+power real NOT NULL,
+mflops_per_watt real NOT NULL,
+FOREIGN KEY (green_rank) REFERENCES ranks(green_rank),
+CHECK(total_cores>0 AND accelerator_cores>=0 AND rmax>0 AND rpeak>0 AND namx>=0 AND nmax>=0 AND power>0 AND mflops_per_watt>0)
 )";
 if(mysqli_query($conn,$sql)){
 echo "Table : ".$tbname." created successfully\r\n";
@@ -99,35 +124,10 @@ echo "Table : ".$tbname." not created ".mysqli_error($conn)."\r\n";
 
 //start of fourth table
 
-//numbers
-$tbname="numbers";
-$sql="CREATE TABLE ".$tbname."(
-machine_id int NOT NULL UNIQUE,
-total_cores int NOT NULL,
-accelerator_cores int NOT NULL,
-rmax real NOT NULL,
-rpeak real NOT NULL,
-nmax real NOT NULL,
-nhalf real NOT NULL,
-power real NOT NULL,
-mflops_per_watt real NOT NULL,
-FOREIGN KEY (machine_id) REFERENCES machines(machine_id),
-CHECK(total_cores>0 AND accelerator_cores>=0 AND rmax>0 AND rpeak>0 AND namx>=0 AND nmax>=0 AND power>0 AND mflops_per_watt>0)
-)";
-if(mysqli_query($conn,$sql)){
-echo "Table : ".$tbname." created successfully\r\n";
-}else{
-echo "Table : ".$tbname." not created ".mysqli_error($conn)."\r\n";
-}
-
-//end of fourth table
-
-//start of fifth table
-
 //geeky_details
 $tbname="geeky_details";
 $sql="CREATE TABLE ".$tbname."(
-machine_id int NOT NULL UNIQUE,
+green_rank int NOT NULL UNIQUE,
 architecture varchar(255) NOT NULL,
 processor varchar(255) NOT NULL,
 processor_technology varchar(255) NOT NULL,
@@ -141,7 +141,7 @@ system_model varchar(255) NOT NULL,
 system_family varchar(255) NOT NULL,
 interconnect varchar(255) NOT NULL,
 interconnect_family varchar(255) NOT NULL,
-FOREIGN KEY (machine_id) REFERENCES machines(machine_id),
+FOREIGN KEY (green_rank) REFERENCES ranks(green_rank),
 CHECK(processor_speed>0 AND cores_per_socket>0)
 )";
 if(mysqli_query($conn,$sql)){
@@ -150,7 +150,7 @@ echo "Table : ".$tbname." created successfully\r\n";
 echo "Table : ".$tbname." not created ".mysqli_error($conn)."\r\n";
 }
 
-//end of fifth table
+//end of fourth table
 
 
 
