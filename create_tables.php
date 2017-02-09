@@ -32,24 +32,6 @@ echo "Error connecting to database : ".$dbname." with user : ".$username." ".mys
 
 //creates tables
 
-//start first table
-
-//machines
-// $tbname="machines";
-// $sql="CREATE TABLE ".$tbname."(
-// machine_id int AUTO_INCREMENT,
-// green_rank int NOT NULL UNIQUE,
-// CHECK(green_rank>0),
-// PRIMARY KEY(machine_id)
-// )";
-// if(mysqli_query($conn,$sql)){
-// echo "Table : ".$tbname." created successfully\r\n";
-// }else{
-// echo "Table : ".$tbname." not created ".mysqli_error($conn)."\r\n";
-// }
-
-//end of first table
-
 //start of first table
 
 //ranks
