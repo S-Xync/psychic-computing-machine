@@ -160,12 +160,12 @@ echo "Table : ".$tbname." not created ".mysqli_error($conn)."\r\n";
 
 //this sql statement can be removed when everything works
 //drops database
-// $sql="DROP DATABASE ".$dbname;
-// if(mysqli_query($conn,$sql)){
-// echo "Dropped database : ".$dbname." successfully\r\n";
-// }else{
-// echo "Error dropping database : ".$dbname." ".mysqli_error($conn)."\r\n\n";
-// }
+$sql="DROP DATABASE ".$dbname;
+if(mysqli_query($conn,$sql)){
+echo "Dropped database : ".$dbname." successfully\r\n";
+}else{
+echo "Error dropping database : ".$dbname." ".mysqli_error($conn)."\r\n\n";
+}
 
 //closes connection
 mysqli_close($conn);
