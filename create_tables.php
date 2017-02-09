@@ -55,6 +55,22 @@ echo "Table : ".$tbname." not created ".mysqli_error($conn)."\r\n";
 
 //start of second table
 
+//locations
+$tbname="locations";
+$sql="CREATE TABLE ".$tbname."(
+location_id int AUTO_INCREMENT,
+country varchar(255) NOT NULL UNIQUE,
+region varchar(255) NOT NULL,
+continent varchar(255) NOT NULL,
+PRIMARY KEY (location_id)
+)";
+if(mysqli_query($conn,$sql)){
+echo "Table : ".$tbname." created successfully\r\n";
+}else{
+echo "Table : ".$tbname." not created ".mysqli_error($conn)."\r\n";
+}
+
+
 //details
 $tbname="details";
 $sql="CREATE TABLE ".$tbname."(
@@ -63,13 +79,12 @@ machine varchar(255),
 computer varchar(255) NOT NULL,
 site varchar(255) NOT NULL,
 manufacturer varchar(255) NOT NULL,
-country varchar(255) NOT NULL,
-region varchar(255) NOT NULL,
-continent varchar(255) NOT NULL,
+location_id int NOT NULL,
 year year NOT NULL,
 segment varchar(255) NOT NULL,
 power_source varchar(255) NOT NULL,
-FOREIGN KEY (green_rank) REFERENCES ranks(green_rank)
+FOREIGN KEY (green_rank) REFERENCES ranks(green_rank),
+FOREIGN KEY (location_id) REFERENCES locations(location_id)
 )";
 if(mysqli_query($conn,$sql)){
 echo "Table : ".$tbname." created successfully\r\n";
