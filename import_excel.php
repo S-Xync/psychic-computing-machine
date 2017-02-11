@@ -1,9 +1,9 @@
 <?php
 /* SaiKumar Immadi */
-$server = “localhost”;
-$username = “myuser”;
-$password = “mypassword”;
-$dbname = “pcm”;
+$server = "localhost";
+$username = "myuser";
+$password = "mypassword";
+$dbname = "pcm";
 
 //creates connection
 $conn=mysqli_connect($server,$username,$password);
@@ -25,7 +25,7 @@ echo "Error connecting to database : ".$dbname." with user : ".$username." ".mys
 ?>
 <html>
 <head>
-<style type=”text/css”>
+<style type="text/css">
 body
 {
 margin: 0;
@@ -63,36 +63,35 @@ background-color: #FCF3F3;
 
 </head>
 <body>
-<div class=”top-bar”>
-<div class=”inside-top-bar”>Import Excel Sheet into MYSQL<br><br>
+<div class="top-bar">
+<div class="inside-top-bar">Import Excel Sheet into MYSQL<br><br>
 </div>
 </div>
-<div style=”text-align:left; border:1px solid #333333; width:300px; margin:0 auto; padding:10px;”>
+<div style="text-align:left; border:1px solid #333333; width:300px; margin:0 auto; padding:10px;">
 
-<form name=”import” method=”post” enctype=”multipart/form-data”>
-<input type=”file” name=”file” /><br />
-<input type=”submit” name=”submit” value=”Submit” />
+<form name="import" method="post" enctype="multipart/form-data">
+<input type="file" name="file" /><br />
+<input type="submit" name="submit" value="Submit" />
 </form>
 <?php
-if(isset($_POST[“submit”]))
+if(isset($_POST["submit"]))
 {
-$file = $_FILES[‘file’][‘tmp_name’];
-$handle = fopen($file, “r”);
+$file = $_FILES['file']['tmp_name'];
+$handle = fopen($file, "r");
 $c = 0;
-while(($filesop = fgetcsv($handle, “,”)) !== false)
+while(($filesop = fgetcsv($handle, ",")) !== false)
 {
-$green_rank = $filesop[0];
 $rank = $filesop[1];
 $previous_rank = $filesop[2];
 $first_appearance= $filesop[3];
 $first_rank = $filesop[4];
-$machine_name = $filesop[5];
-$computer_name = $filesop[6];
-$site_name = $filesop[7];
-$manufacturer_name = $filesop[8];
-$country_name = $filesop[9];
+$machine = $filesop[5];
+$computer = $filesop[6];
+$site = $filesop[7];
+$manufacturer = $filesop[8];
+$country = $filesop[9];
 $year = $filesop[10];
-$segment_name = $filesop[11];
+$segment = $filesop[11];
 $total_cores = $filesop[12];
 $accelerator_cores = $filesop[13];
 $rmax = $filesop[14];
@@ -100,40 +99,83 @@ $rpeak = $filesop[15];
 $nmax = $filesop[16];
 $nhalf = $filesop[17];
 $power = $filesop[18];
-$power_source_name = $filesop[19];
+$power_source = $filesop[19];
 $mflops_per_watt = $filesop[20];
-$architecture_name = $filesop[21];
-$processor_name = $filesop[22];
-$processor_technology_name = $filesop[23];
+$architecture = $filesop[21];
+$processor = $filesop[22];
+$processor_technology = $filesop[23];
 $processor_speed = $filesop[24];
-$operating_system_name = $filesop[25];
-$operating_system_family_name = $filesop[26];
-$accelerator_name = $filesop[27];
+$operating_system = $filesop[25];
+$operating_system_family = $filesop[26];
+$accelerator = $filesop[27];
 $cores_per_socket = $filesop[28];
-$processor_generation_name = $filesop[29];
-$system_model_name = $filesop[30];
-$system_family_name = $filesop[31];
-$interconnect_family_name = $filesop[32];
-$interconnect_name = $filesop[33];
-$region_name = $filesop[34];
-$continent_name = $filesop[35];
-
-$sql = "INSERT INTO machines (green_rank) VALUES ($green_rank)";
+$processor_generation = $filesop[29];
+$system_model = $filesop[30];
+$system_family = $filesop[31];
+$interconnect_family = $filesop[32];
+$interconnect = $filesop[33];
+$region = $filesop[34];
+$continent = $filesop[35];
+//insert into ranks table
+if(strlen($previous_rank)==0){
+  $sql = "INSERT INTO ranks (rank,first_appearance,first_rank) VALUES ('".$rank."','".$first_appearance."','".$first_rank."')";
+}else{
+  $sql = "INSERT INTO ranks (rank,previous_rank,first_appearance,first_rank) VALUES ('".$rank."','".$previous_rank."','".$first_appearance."','".$first_rank."')";
+}
 if(mysqli_query($conn,$sql)){
-
 }else{
   echo "Error inserting rows into database ".$dbname." ".mysqli_error($conn)."\r\n\n";
 }
-$sql="SELECT machine_id FROM machine WHERE green_rank=".'$green_rank'."";
+//retrieve green_rank from ranks table
+$sql="SELECT green_rank FROM ranks WHERE rank='".$rank."'";
+$result=mysqli_query($conn,$sql);
+if(mysqli_num_rows($result)==1){
+  $row = mysqli_fetch_assoc($result);
+  $green_rank=$row["green_rank"];
+}else{
+  echo "Error inserting rows into database ".$dbname."\r\n\n";
+}
+//insert into locations table
+$sql="INSERT INTO locations (country,region,continent) VALUES ('".$country."','".$region."','".$continent."')";
+mysqli_query($conn,$sql);
+//retrieve location_id from locations table
+$sql="SELECT location_id FROM locations WHERE country='".$country."'";
+$result=mysqli_query($conn,$sql);
+if(mysqli_num_rows($result)==1){
+  $row = mysqli_fetch_assoc($result);
+  $location_id=$row["location_id"];
+}else{
+  echo "Error inserting rows into database ".$dbname."\r\n\n";
+}
+//insert into details table
+if(strlen($machine)==0){
+  $sql="INSERT INTO details (green_rank,computer,site,manufacturer,location_id,year,segment,power_source) VALUES ('".$green_rank."','".$computer."','".$site."','".$manufacturer."','".$location_id."','".$year."','".$segment."','".$power_source."')";
+}else{
+  $sql="INSERT INTO details (green_rank,machine,computer,site,manufacturer,location_id,year,segment,power_source) VALUES ('".$green_rank."','".$machine."','".$computer."','".$site."','".$manufacturer."','".$location_id."','".$year."','".$segment."','".$power_source."')";
+}
+if(mysqli_query($conn,$sql)){
+}else{
+  echo "Error inserting rows into database ".$dbname." ".mysqli_error($conn)."\r\n\n";
+}
+//insert into numbers table
+$sql="INSERT INTO numbers (green_rank,total_cores,accelerator_cores,rmax,rpeak,nmax,nhalf,power,mflops_per_watt) VALUES ('".$green_rank."','".$total_cores."','".$accelerator_cores."','".$rmax."','".$rpeak."','".$nmax."','".$nhalf."','".$power."','".$mflops_per_watt."')";
+if(mysqli_query($conn,$sql)){
+}else{
+  echo "Error inserting rows into database ".$dbname." ".mysqli_error($conn)."\r\n\n";
+}
+//insert into geeky_details table
+if(strlen($accelerator)==0){
+  $sql="INSERT INTO geeky_details (green_rank,architecture,processor,processor_technology,processor_speed,operating_system,operating_system_family,cores_per_socket,processor_generation,system_model,system_family,interconnect,interconnect_family) VALUES ('".$green_rank."','".$architecture."','".$processor."','".$processor_technology."','".$processor_speed."','".$operating_system."','".$operating_system_family."','".$cores_per_socket."','".$processor_generation."','".$system_model."','".$system_family."','".$interconnect."','".$interconnect_family."')";
+}else{
+  $sql="INSERT INTO geeky_details (green_rank,architecture,processor,processor_technology,processor_speed,operating_system,operating_system_family,accelerator,cores_per_socket,processor_generation,system_model,system_family,interconnect,interconnect_family) VALUES ('".$green_rank."','".$architecture."','".$processor."','".$processor_technology."','".$processor_speed."','".$operating_system."','".$operating_system_family."','".$accelerator."','".$cores_per_socket."','".$processor_generation."','".$system_model."','".$system_family."','".$interconnect."','".$interconnect_family."')";
+}
+if(mysqli_query($conn,$sql)){
+}else{
+  echo "Error inserting rows into database ".$dbname." ".mysqli_error($conn)."\r\n\n";
+}
 $c = $c + 1;
 }
-
-if($sql){
-echo “You database has imported successfully. You have inserted “. $c .” recoreds”;
-}else{
-echo “Sorry! There is some problem.”;
-}
-
+echo "You database has imported successfully. You have inserted ". $c ." records";
 }
 ?>
 </div>

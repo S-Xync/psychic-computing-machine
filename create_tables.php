@@ -131,7 +131,7 @@ processor_technology varchar(255) NOT NULL,
 processor_speed int NOT NULL,
 operating_system varchar(255) NOT NULL,
 operating_system_family varchar(255) NOT NULL,
-accelerator varchar(255) NOT NULL,
+accelerator varchar(255),
 cores_per_socket int NOT NULL,
 processor_generation varchar(255) NOT NULL,
 system_model varchar(255) NOT NULL,
@@ -157,12 +157,12 @@ echo "Table : ".$tbname." not created ".mysqli_error($conn)."\r\n";
 
 //this sql statement can be removed when everything works
 //drops database
-$sql="DROP DATABASE ".$dbname;
-if(mysqli_query($conn,$sql)){
-echo "Dropped database : ".$dbname." successfully\r\n";
-}else{
-echo "Error dropping database : ".$dbname." ".mysqli_error($conn)."\r\n\n";
-}
+// $sql="DROP DATABASE ".$dbname;
+// if(mysqli_query($conn,$sql)){
+// echo "Dropped database : ".$dbname." successfully\r\n";
+// }else{
+// echo "Error dropping database : ".$dbname." ".mysqli_error($conn)."\r\n\n";
+// }
 
 //closes connection
 mysqli_close($conn);
