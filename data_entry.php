@@ -73,7 +73,7 @@ body
   </div>
   <div style="text-align:left; border:1px solid #333333; width:450px; margin:2px auto; padding:10px;">
     <h4>Bulk Loading</h4>
-    <form name="import" method="post" enctype="multipart/form-data">
+    <form name="import_csv" method="post" enctype="multipart/form-data">
       CSV File: <input type="file" name="file" required/><br />
       <input type="submit" name="submitb" value="Submit" />
     </form>
@@ -191,7 +191,7 @@ body
   </div>
   <div style="text-align:left; border:1px solid #333333; width:450px; margin:2px auto; padding:10px;">
     <h4>Row Entry</h4>
-    <form name="entry" method="post" enctype="multipart/form-data">
+    <form name="row_entry" method="post" enctype="multipart/form-data">
       Rank: <input type="text" name="rank" required/><br/>
       Previous Rank: <input type="text" name="previous_rank"/><br/>
       First Appearance: <input type="text" name="first_appearance" required/><br/>
@@ -227,10 +227,10 @@ body
       Interconnect Family: <input type="text" name="interconnect_family" required/><br/>
       Region: <input type="text" name="region" required/><br/>
       Continent: <input type="text" name="continent" required/><br/>
-      <input type="submit" name="submitn" value="Submit" />
+      <input type="submit" name="submitr" value="Submit" />
     </form>
     <?php
-    if(isset($_POST["submitn"])){
+    if(isset($_POST["submitr"])){
       $rank = $_POST["rank"];
       $previous_rank = $_POST["previous_rank"];
       $first_appearance= $_POST["first_appearance"];
