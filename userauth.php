@@ -1,0 +1,107 @@
+<?php
+/* SaiKumar Immadi */
+// Start the session
+session_start();
+$server = "localhost";
+$username = "myuser";
+$password = "mypassword";
+$dbname = "pcm";
+
+// creates connection
+$conn=mysqli_connect($server,$username,$password);
+
+// checks connection
+if(!$conn){
+  die("\nConnection Failed : ".mysqli_connect_error()."\r\n\n");
+  echo "<br>";
+}
+echo "\nConnected Successfully using username : ".$username."\r\n";
+echo "<br>";
+
+// connects to the database created above
+$sql="USE ".$dbname;
+if(mysqli_query($conn,$sql)){
+  echo "Connected to database : ".$dbname." with user : ".$username."\r\n";
+  echo "<br>";
+}else{
+  echo "Error connecting to database : ".$dbname." with user : ".$username." ".mysqli_error($conn)."\r\n\n";
+  echo "<br>";
+}
+
+?>
+<html>
+<head>
+<style type="text/css">
+body
+{
+  margin: 0;
+  padding: 0;
+  background-color:#FFFFFF;
+  text-align:center;
+}
+.top-bar
+{
+  width: 100%;
+  height: auto;
+  text-align: center;
+  background-color:#FFF;
+  border-bottom: 1px solid #000;
+  margin-bottom: 20px;
+}
+.inside-top-bar
+{
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+.link
+{
+  font-size: 18px;
+  text-decoration: none;
+  background-color: #000;
+  color: #FFF;
+  padding: 5px;
+}
+.link:hover
+{
+  background-color: #FCF3F3;
+}
+</style>
+
+</head>
+<body>
+  <div class="top-bar">
+    <div class="inside-top-bar">Admin Login Page<br><br>
+    </div>
+  </div>
+  <div style="text-align:left; border:1px solid #333333; width:450px; margin:2px auto; padding:10px;">
+    <h4>Admin Login</h4>
+    <form name="login" method="post" enctype="multipart/form-data">
+      Username: <input type="text" name="user" required/><br />
+      Password: <input type="password" name="pass" required/><br />
+      <input type="submit" name="login" value="Login" />
+    </form>
+    <?php
+    if(isset($_POST["login"])){
+      $username=$_POST["user"];
+      $password=$_POST["pass"];
+      $hash_password=password_hash($password,PASSWORD_BCRYPT);
+      $sql="SELECT hash_password from users WHERE username='".$username."'";
+      $result=mysqli_query($conn,$sql);
+      if(mysqli_num_rows($result)==1){
+        $row = mysqli_fetch_assoc($result);
+        $retrieve_hash_password=$row["hash_password"];
+        if(strcmp($hash_password,$retrieve_hash_password)==0){
+          $_SESSION["admin"]=true;
+          header('Location: data_entry.php');
+          exit;
+        }else{
+          echo "User Authentication Failed\n";
+        }
+      }else{
+        echo "Username Error\r\n";
+      }
+
+    }
+    ?>
+  </body>
+  </html>

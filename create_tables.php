@@ -149,11 +149,32 @@ echo "Table : ".$tbname." not created ".mysqli_error($conn)."\r\n";
 
 //end of fourth table
 
+//start of fifth table
 
+//users
+$tbname="users";
+$sql="CREATE TABLE ".$tbname."(
+username varchar(255) NOT NULL UNIQUE,
+hash_password varchar(255) NOT NULL
+)";
+if(mysqli_query($conn,$sql)){
+echo "Table : ".$tbname." created successfully\r\n";
+}else{
+echo "Table : ".$tbname." not created ".mysqli_error($conn)."\r\n";
+}
 
+//inserting admin row into users table
+$username="admin";
+$password="admin123"
+$hash_password=password_hash($password,PASSWORD_BCRYPT);//BCRYPT will always be 60 characters
+$sql="INSERT INTO users VALUES('".$username."','".$hash_password."')";
+if(mysqli_query($conn,$sql)){
+  echo "Admin Created\r\n";
+}else{
+  echo "Error inserting rows into database ".$dbname." ".mysqli_error($conn)."\r\n\n";
+}
 
-
-
+//end of fifth table
 
 //this sql statement can be removed when everything works
 //drops database
