@@ -165,7 +165,7 @@ echo "Table : ".$tbname." not created ".mysqli_error($conn)."\r\n";
 
 //inserting admin row into users table
 $username="admin";
-$password="admin123"
+$password="admin123";
 $hash_password=password_hash($password,PASSWORD_BCRYPT);//BCRYPT will always be 60 characters
 $sql="INSERT INTO users VALUES('".$username."','".$hash_password."')";
 if(mysqli_query($conn,$sql)){

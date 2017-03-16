@@ -70,28 +70,41 @@ body
 </head>
 <body>
   <div class="top-bar">
-    <div class="inside-top-bar">Admin Login Page<br><br>
+    <div class="inside-top-bar"><b>Admin Login Page</b><br><br>
     </div>
   </div>
   <div style="text-align:left; border:1px solid #333333; width:450px; margin:2px auto; padding:10px;">
     <h4>Admin Login</h4>
     <form name="login" method="post" enctype="multipart/form-data">
-      Username: <input type="text" name="user" required/><br />
-      Password: <input type="password" name="pass" required/><br />
-      <input type="submit" name="login" value="Login" />
+      <table>
+        <tr>
+          <td align="right">Username :</td>
+          <td align="left"><input type="text" name="user" required/></td>
+        </tr>
+        <tr>
+          <td align="right">Password :</td>
+          <td align="left"><input type="password" name="pass" required/></td>
+        </tr>
+        <tr>
+          <td align="right"></td>
+          <td align="left"><input type="submit" name="login" value="Login" /></td>
+        </tr>
+      </table>
+      <!-- Username: <input type="text" name="user" required/><br /> -->
+      <!-- Password: <input type="password" name="pass" required/><br /> -->
+      <!-- <input type="submit" name="login" value="Login" /> -->
     </form>
     <?php
-    if(isset($_POST["login"])){
+    if(isset($_POST["login"])){//ajax request
       $username=$_POST["user"];
       $password=$_POST["pass"];
-      $hash_password=password_hash($password,PASSWORD_BCRYPT);
       $sql="SELECT hash_password from users WHERE username='".$username."'";
       $result=mysqli_query($conn,$sql);
       if(mysqli_num_rows($result)==1){
         $row = mysqli_fetch_assoc($result);
-        $retrieve_hash_password=$row["hash_password"];
-        if(strcmp($hash_password,$retrieve_hash_password)==0){
-          $_SESSION["admin"]=true;
+        $hash_password=$row["hash_password"];
+        if(password_verify($password,$hash_password)){
+          $_SESSION["user"]="admin";
           header('Location: data_entry.php');
           exit;
         }else{

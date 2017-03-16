@@ -6,7 +6,6 @@ $server = "localhost";
 $username = "myuser";
 $password = "mypassword";
 $dbname = "pcm";
-
 // creates connection
 $conn=mysqli_connect($server,$username,$password);
 
@@ -27,10 +26,10 @@ if(mysqli_query($conn,$sql)){
   echo "Error connecting to database : ".$dbname." with user : ".$username." ".mysqli_error($conn)."\r\n\n";
   echo "<br>";
 }
-if(_SESSION["admin"]){
+if(strcmp($_SESSION["user"],"admin")==0){
   echo "Admin Logged In\r\n";
 }else{
-  echo "Admin Not Logged In\r\n"
+  echo "Admin Not Logged In\r\n";
 }
 ?>
 <html>
@@ -74,14 +73,51 @@ body
 </head>
 <body>
   <div class="top-bar">
-    <div class="inside-top-bar">Data Entry into Database<br><br>
-    </div>
+    <?php
+    if(strcmp($_SESSION["user"],"admin")==0){
+      ?>
+      <div class="inside-top-bar">
+        <form name="logout" method="post" enctype="multipart/form-data">
+          <input type="submit" name="logout" value="Logout" />
+        </form>
+      </div>
+      <?php
+    }else{
+      ?>
+      <div class="inside-top-bar">
+        <form name="login" method="post" enctype="multipart/form-data">
+          <input type="submit" name="login" value="Login" />
+        </form>
+      </div>
+      <?php
+    }
+    if(isset($_POST["logout"])){
+      unset($_SESSION["user"]);
+      header('Location: userauth.php');
+      exit;
+    }
+    if(isset($_POST["login"])){
+      header('Location: userauth.php');
+      exit;
+    }
+    ?>
+    <div class="inside-top-bar"><b>Data Entry into Database</b><br></div>
   </div>
   <div style="text-align:left; border:1px solid #333333; width:450px; margin:2px auto; padding:10px;">
     <h4>Bulk Loading</h4>
     <form name="import_csv" method="post" enctype="multipart/form-data">
-      CSV File: <input type="file" name="file" required/><br />
-      <input type="submit" name="submitb" value="Submit" />
+      <table>
+        <tr>
+          <td align="right">CSV File :</td>
+          <td align="left"><input type="file" name="file" required/></td>
+        </tr>
+        <tr>
+          <td align="right"></td>
+          <td align="left"><input type="submit" name="submitb" value="Submit" /></td>
+        </tr>
+      </table>
+      <!-- CSV File: <input type="file" name="file" required/><br /> -->
+      <!-- <input type="submit" name="submitb" value="Submit" /> -->
     </form>
     <?php
     // function for inserting each row of data into database
@@ -146,7 +182,7 @@ body
     }
 
     if(isset($_POST["submitb"])){//ajax post request for bulk loading
-      if(_SESSION["admin"]){
+      if(strcmp($_SESSION["user"],"admin")==0){
         $file = $_FILES['file']['tmp_name'];//uploaded file is temporarily stored
         $handle = fopen($file, "r");
         $c = 0;
@@ -192,7 +228,7 @@ body
           row_entry( $conn, $dbname, $rank, $previous_rank, $first_appearance, $first_rank, $machine, $computer, $site, $manufacturer, $country, $year, $segment, $total_cores, $accelerator_cores, $rmax, $rpeak, $nmax, $nhalf, $power, $power_source, $mflops_per_watt, $architecture, $processor, $processor_technology, $processor_speed, $operating_system, $operating_system_family, $accelerator, $cores_per_socket, $processor_generation, $system_model, $system_family, $interconnect_family, $interconnect, $region, $continent);
           $c = $c + 1;
         }
-        echo "You database has been imported successfully. You have inserted ". $c ." records";
+        echo "You database has been imported successfully. You have inserted ". $c ." records\r\n";
       }else{
         echo "Admin Not Logged In\r\n";
       }
@@ -202,46 +238,193 @@ body
   <div style="text-align:left; border:1px solid #333333; width:450px; margin:2px auto; padding:10px;">
     <h4>Row Entry</h4>
     <form name="row_entry" method="post" enctype="multipart/form-data">
-      Rank: <input type="text" name="rank" required/><br/>
-      Previous Rank: <input type="text" name="previous_rank"/><br/>
-      First Appearance: <input type="text" name="first_appearance" required/><br/>
-      First Rank: <input type="text" name="first_rank" required/><br/>
-      Machine: <input type="text" name="machine"/><br/>
-      Computer: <input type="text" name="computer" required/><br/>
-      Site: <input type="text" name="site" required/><br/>
-      Manufacturer: <input type="text" name="manufacturer" required/><br/>
-      Country: <input type="text" name="country" required/><br/>
-      Year: <input type="text" name="year" required/><br/>
-      Segment: <input type="text" name="segment" required/><br/>
-      Total Cores: <input type="text" name="total_cores" required/><br/>
-      Accelerator / Co-Processor Cores: <input type="text" name="accelerator_cores" required/><br/>
-      Rmax: <input type="text" name="rmax" required/><br/>
-      Rpeak: <input type="text" name="rpeak" required/><br/>
-      Nmax: <input type="text" name="nmax" required/><br/>
-      Nhalf: <input type="text" name="nhalf" required/><br/>
-      Power: <input type="text" name="power" required/><br/>
-      Power Source: <input type="text" name="power_source" required/><br/>
-      Mflops/Watt: <input type="text" name="mflops_per_watt" required/><br/>
-      Architecture: <input type="text" name="architecture" required/><br/>
-      Processor: <input type="text" name="processor" required/><br/>
-      Processor Technology: <input type="text" name="processor_technology" required/><br/>
-      Processor Speed: <input type="text" name="processor_speed" required/><br/>
-      Operating System: <input type="text" name="operating_system" required/><br/>
-      Operating System Family: <input type="text" name="operating_system_family" required/><br/>
-      Accelerator / Co-Processor: <input type="text" name="accelerator"/><br/>
-      Cores Per Socket: <input type="text" name="cores_per_socket" required/><br/>
-      Processor Generation: <input type="text" name="processor_generation" required/><br/>
-      System Model: <input type="text" name="system_model" required/><br/>
-      System Family: <input type="text" name="system_family" required/><br/>
-      Interconnect: <input type="text" name="interconnect" required/><br/>
-      Interconnect Family: <input type="text" name="interconnect_family" required/><br/>
-      Region: <input type="text" name="region" required/><br/>
-      Continent: <input type="text" name="continent" required/><br/>
-      <input type="submit" name="submitr" value="Submit" />
+      <table>
+        <tr>
+          <td align="right">Rank :</td>
+          <td align="left"><input type="text" name="rank" required/></td>
+        </tr>
+        <tr>
+          <td align="right">Previous Rank :</td>
+          <td align="left"><input type="text" name="previous_rank"/></td>
+        </tr>
+        <tr>
+          <td align="right">First Appearance :</td>
+          <td align="left"><input type="text" name="first_appearance" required/></td>
+        </tr>
+        <tr>
+          <td align="right">First Rank :</td>
+          <td align="left"><input type="text" name="first_rank" required/></td>
+        </tr>
+        <tr>
+          <td align="right">Machine :</td>
+          <td align="left"><input type="text" name="machine"/></td>
+        </tr>
+        <tr>
+          <td align="right">Computer :</td>
+          <td align="left"><input type="text" name="computer" required/></td>
+        </tr>
+        <tr>
+          <td align="right">Site :</td>
+          <td align="left"><input type="text" name="site" required/><br/></td>
+        </tr>
+        <tr>
+          <td align="right">Manufacturer :</td>
+          <td align="left"><input type="text" name="manufacturer" required/></td>
+        </tr>
+        <tr>
+          <td align="right">Country :</td>
+          <td align="left"><input type="text" name="country" required/></td>
+        </tr>
+        <tr>
+          <td align="right">Year :</td>
+          <td align="left"><input type="text" name="year" required/></td>
+        </tr>
+        <tr>
+          <td align="right">Segment :</td>
+          <td align="left"><input type="text" name="segment" required/></td>
+        </tr>
+        <tr>
+          <td align="right">Total Cores :</td>
+          <td align="left"><input type="text" name="total_cores" required/></td>
+        </tr>
+        <tr>
+          <td align="right">Accelerator / Co-Processor Cores :</td>
+          <td align="left"><input type="text" name="accelerator_cores" required/></td>
+        </tr>
+        <tr>
+          <td align="right">Rmax :</td>
+          <td align="left"><input type="text" name="rmax" required/></td>
+        </tr>
+        <tr>
+          <td align="right">Rpeak :</td>
+          <td align="left"><input type="text" name="rpeak" required/></td>
+        </tr>
+        <tr>
+          <td align="right">Nmax :</td>
+          <td align="left"><input type="text" name="nmax" required/></td>
+        </tr>
+        <tr>
+          <td align="right">Nhalf :</td>
+          <td align="left"><input type="text" name="nhalf" required/></td>
+        </tr>
+        <tr>
+          <td align="right">Power :</td>
+          <td align="left"><input type="text" name="power" required/></td>
+        </tr>
+        <tr>
+          <td align="right">Power Source :</td>
+          <td align="left"><input type="text" name="power_source" required/></td>
+        </tr>
+        <tr>
+          <td align="right">Mflops/Watt :</td>
+          <td align="left"><input type="text" name="mflops_per_watt" required/></td>
+        </tr>
+        <tr>
+          <td align="right">Architecture :</td>
+          <td align="left"><input type="text" name="architecture" required/></td>
+        </tr>
+        <tr>
+          <td align="right">Processor :</td>
+          <td align="left"><input type="text" name="processor" required/></td>
+        </tr>
+        <tr>
+          <td align="right">Processor Technology :</td>
+          <td align="left"><input type="text" name="processor_technology" required/></td>
+        </tr>
+        <tr>
+          <td align="right">Processor Speed :</td>
+          <td align="left"><input type="text" name="processor_speed" required/></td>
+        </tr>
+        <tr>
+          <td align="right">Operating System :</td>
+          <td align="left"><input type="text" name="operating_system" required/></td>
+        </tr>
+        <tr>
+          <td align="right">Operating System Family :</td>
+          <td align="left"><input type="text" name="operating_system_family" required/></td>
+        </tr>
+        <tr>
+          <td align="right">Accelerator / Co-Processor :</td>
+          <td align="left"><input type="text" name="accelerator"/></td>
+        </tr>
+        <tr>
+          <td align="right">Cores per Socket :</td>
+          <td align="left"><input type="text" name="cores_per_socket" required/></td>
+        </tr>
+        <tr>
+          <td align="right">Processor Generation :</td>
+          <td align="left"><input type="text" name="processor_generation" required/></td>
+        </tr>
+        <tr>
+          <td align="right">System Model :</td>
+          <td align="left"><input type="text" name="system_model" required/></td>
+        </tr>
+        <tr>
+          <td align="right">System Family :</td>
+          <td align="left"><input type="text" name="system_family" required/></td>
+        </tr>
+        <tr>
+          <td align="right">Interconnect :</td>
+          <td align="left"><input type="text" name="interconnect" required/></td>
+        </tr>
+        <tr>
+          <td align="right">Interconnect Family :</td>
+          <td align="left"><input type="text" name="interconnect_family" required/></td>
+        </tr>
+        <tr>
+          <td align="right">Region :</td>
+          <td align="left"><input type="text" name="region" required/><br/></td>
+        </tr>
+        <tr>
+          <td align="right">Continent :</td>
+          <td align="left"><input type="text" name="continent" required/></td>
+        </tr>
+        <tr>
+          <td align="right"></td>
+          <td align="left"><input type="submit" name="submitr" value="Submit" /></td>
+        </tr>
+
+      </table>
+      <!-- Rank: <input type="text" name="rank" required/><br/> -->
+      <!-- Previous Rank: <input type="text" name="previous_rank"/><br/> -->
+      <!-- First Appearance: <input type="text" name="first_appearance" required/><br/> -->
+      <!-- First Rank: <input type="text" name="first_rank" required/><br/> -->
+      <!-- Machine: <input type="text" name="machine"/><br/> -->
+      <!-- Computer: <input type="text" name="computer" required/><br/> -->
+      <!-- Site: <input type="text" name="site" required/><br/> -->
+      <!-- Manufacturer: <input type="text" name="manufacturer" required/><br/> -->
+      <!-- Country: <input type="text" name="country" required/><br/> -->
+      <!-- Year: <input type="text" name="year" required/><br/> -->
+      <!-- Segment: <input type="text" name="segment" required/><br/> -->
+      <!-- Total Cores: <input type="text" name="total_cores" required/><br/> -->
+      <!-- Accelerator / Co-Processor Cores: <input type="text" name="accelerator_cores" required/><br/> -->
+      <!-- Rmax: <input type="text" name="rmax" required/><br/> -->
+      <!-- Rpeak: <input type="text" name="rpeak" required/><br/> -->
+      <!-- Nmax: <input type="text" name="nmax" required/><br/> -->
+      <!-- Nhalf: <input type="text" name="nhalf" required/><br/> -->
+      <!-- Power: <input type="text" name="power" required/><br/> -->
+      <!-- Power Source: <input type="text" name="power_source" required/><br/> -->
+      <!-- Mflops/Watt: <input type="text" name="mflops_per_watt" required/><br/> -->
+      <!-- Architecture: <input type="text" name="architecture" required/><br/> -->
+      <!-- Processor: <input type="text" name="processor" required/><br/> -->
+      <!-- Processor Technology: <input type="text" name="processor_technology" required/><br/> -->
+      <!-- Processor Speed: <input type="text" name="processor_speed" required/><br/> -->
+      <!-- Operating System: <input type="text" name="operating_system" required/><br/> -->
+      <!-- Operating System Family: <input type="text" name="operating_system_family" required/><br/> -->
+      <!-- Accelerator / Co-Processor: <input type="text" name="accelerator"/><br/> -->
+      <!-- Cores Per Socket: <input type="text" name="cores_per_socket" required/><br/> -->
+      <!-- Processor Generation: <input type="text" name="processor_generation" required/><br/> -->
+      <!-- System Model: <input type="text" name="system_model" required/><br/> -->
+      <!-- System Family: <input type="text" name="system_family" required/><br/> -->
+      <!-- Interconnect: <input type="text" name="interconnect" required/><br/> -->
+      <!-- Interconnect Family: <input type="text" name="interconnect_family" required/><br/> -->
+      <!-- Region: <input type="text" name="region" required/><br/> -->
+      <!-- Continent: <input type="text" name="continent" required/><br/> -->
+      <!-- <input type="submit" name="submitr" value="Submit" /> -->
     </form>
     <?php
     if(isset($_POST["submitr"])){
-      if(_SESSION["admin"]){
+      if(strcmp($_SESSION["user"],"admin")==0){
         $rank = $_POST["rank"];
         $previous_rank = $_POST["previous_rank"];
         $first_appearance= $_POST["first_appearance"];
@@ -278,13 +461,11 @@ body
         $region = $_POST["region"];
         $continent = $_POST["continent"];
         row_entry( $conn, $dbname, $rank, $previous_rank, $first_appearance, $first_rank, $machine, $computer, $site, $manufacturer, $country, $year, $segment, $total_cores, $accelerator_cores, $rmax, $rpeak, $nmax, $nhalf, $power, $power_source, $mflops_per_watt, $architecture, $processor, $processor_technology, $processor_speed, $operating_system, $operating_system_family, $accelerator, $cores_per_socket, $processor_generation, $system_model, $system_family, $interconnect_family, $interconnect, $region, $continent);
-        echo "Record inserted successfully";
+        echo "Record inserted successfully\r\n";
       }else{
         echo "Admin Not Logged In\r\n";
       }
     }
-
-
     ?>
   </div>
 </body>
