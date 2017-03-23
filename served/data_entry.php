@@ -17,7 +17,7 @@ if(!$conn){
 echo "\nConnected Successfully using username : ".$username."\r\n";
 echo "<br>";
 
-// connects to the database created above
+// connects to the database
 $sql="USE ".$dbname;
 if(mysqli_query($conn,$sql)){
   echo "Connected to database : ".$dbname." with user : ".$username."\r\n";
@@ -385,42 +385,6 @@ body
         </tr>
 
       </table>
-      <!-- Rank: <input type="text" name="rank" required/><br/> -->
-      <!-- Previous Rank: <input type="text" name="previous_rank"/><br/> -->
-      <!-- First Appearance: <input type="text" name="first_appearance" required/><br/> -->
-      <!-- First Rank: <input type="text" name="first_rank" required/><br/> -->
-      <!-- Machine: <input type="text" name="machine"/><br/> -->
-      <!-- Computer: <input type="text" name="computer" required/><br/> -->
-      <!-- Site: <input type="text" name="site" required/><br/> -->
-      <!-- Manufacturer: <input type="text" name="manufacturer" required/><br/> -->
-      <!-- Country: <input type="text" name="country" required/><br/> -->
-      <!-- Year: <input type="text" name="year" required/><br/> -->
-      <!-- Segment: <input type="text" name="segment" required/><br/> -->
-      <!-- Total Cores: <input type="text" name="total_cores" required/><br/> -->
-      <!-- Accelerator / Co-Processor Cores: <input type="text" name="accelerator_cores" required/><br/> -->
-      <!-- Rmax: <input type="text" name="rmax" required/><br/> -->
-      <!-- Rpeak: <input type="text" name="rpeak" required/><br/> -->
-      <!-- Nmax: <input type="text" name="nmax" required/><br/> -->
-      <!-- Nhalf: <input type="text" name="nhalf" required/><br/> -->
-      <!-- Power: <input type="text" name="power" required/><br/> -->
-      <!-- Power Source: <input type="text" name="power_source" required/><br/> -->
-      <!-- Mflops/Watt: <input type="text" name="mflops_per_watt" required/><br/> -->
-      <!-- Architecture: <input type="text" name="architecture" required/><br/> -->
-      <!-- Processor: <input type="text" name="processor" required/><br/> -->
-      <!-- Processor Technology: <input type="text" name="processor_technology" required/><br/> -->
-      <!-- Processor Speed: <input type="text" name="processor_speed" required/><br/> -->
-      <!-- Operating System: <input type="text" name="operating_system" required/><br/> -->
-      <!-- Operating System Family: <input type="text" name="operating_system_family" required/><br/> -->
-      <!-- Accelerator / Co-Processor: <input type="text" name="accelerator"/><br/> -->
-      <!-- Cores Per Socket: <input type="text" name="cores_per_socket" required/><br/> -->
-      <!-- Processor Generation: <input type="text" name="processor_generation" required/><br/> -->
-      <!-- System Model: <input type="text" name="system_model" required/><br/> -->
-      <!-- System Family: <input type="text" name="system_family" required/><br/> -->
-      <!-- Interconnect: <input type="text" name="interconnect" required/><br/> -->
-      <!-- Interconnect Family: <input type="text" name="interconnect_family" required/><br/> -->
-      <!-- Region: <input type="text" name="region" required/><br/> -->
-      <!-- Continent: <input type="text" name="continent" required/><br/> -->
-      <!-- <input type="submit" name="submitr" value="Submit" /> -->
     </form>
     <?php
     if(isset($_POST["submitr"])){
