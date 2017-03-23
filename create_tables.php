@@ -163,6 +163,8 @@ echo "Table : ".$tbname." created successfully\r\n";
 echo "Table : ".$tbname." not created ".mysqli_error($conn)."\r\n";
 }
 
+//end of fifth table
+
 //inserting admin row into users table
 $username="admin";
 $password="admin123";
@@ -173,8 +175,6 @@ if(mysqli_query($conn,$sql)){
 }else{
   echo "Error inserting rows into database ".$dbname." ".mysqli_error($conn)."\r\n\n";
 }
-
-//end of fifth table
 
 //this sql statement can be removed when everything works
 //drops database
