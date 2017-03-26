@@ -17,6 +17,7 @@ mysqli_query($conn,$sql);
   <link rel="stylesheet" href="css/styles.css">
   <script type="text/javascript" src="js/jquery-3.2.0.min.js"></script>
   <script type="text/javascript" src="js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="js/functions.js"></script>
 </head>
 <body>
   <nav class="navbar navbar-default navbar-fixed-top">
@@ -34,7 +35,7 @@ mysqli_query($conn,$sql);
       </div>
     </div>
     <div class="container">
-      <form method="post">
+      <form name="user_form" id="user_form" method="post">
         <div class="row">
           <div class="form-group col-md-6">
             <label for="year">Year</label>
@@ -162,7 +163,7 @@ mysqli_query($conn,$sql);
               <option value="All" selected="selected">All</option>
               <option value="NULL">N/A</option>
               <?php
-              $sql="SELECT DISTINCT accelerator FROM geeky_details ORDER BY accelerator ASC";
+              $sql="SELECT DISTINCT accelerator FROM geeky_details WHERE accelerator IS NOT NULL ORDER BY accelerator ASC";
               $result=mysqli_query($conn,$sql);
               if(mysqli_num_rows($result)>0){
                 while($row=mysqli_fetch_assoc($result)){
@@ -222,12 +223,81 @@ mysqli_query($conn,$sql);
         <div class="row">
           <div class="col-md-4"></div>
           <div class="form-group col-md-2" align="center">
-            <input type="submit" name="submit" value="Submit" class="btn btn-default btn-lg">
+            <input type="submit" name="submit" value="Submit" id="submit_btn" class="btn btn-default btn-lg">
           </div>
           <div class="col-md-6"></div>
         </div>
       </form>
     </div>
+    <?php
+    if(isset($_POST["submit"])){
+      $year=$_POST["year"];
+      $country=$_POST["country"];
+      $manufacturer=$_POST["manufacturer"];
+      $processor_generation=$_POST["processor_generation"];
+      $architecture=$_POST["architecture"];
+      $segment=$_POST["segment"];
+      $interconnect_family=$_POST["interconnect_family"];
+      $accelerator=$_POST["accelerator"];
+      $operating_system_family=$_POST["operating_system_family"];
+      $rank_from=$_POST["rank_from"];
+      $rank_to=$_POST["rank_to"];
+      ?>
+      <div class="container">
+        <div class="row">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h4>Results!</h4>
+            </div>
+            <div class="table-responsive">
+              <table class="table table-bordered table-hover">
+                <thead>
+                  <tr>
+                    <th class="col-md-4">dshf</th>
+                    <th class="col-md-4">kjgkdsfd</th>
+                    <th class="col-md-4">sdifuh</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="col-md-4">dskghfj</td>
+                    <td class="col-md-4">dskughlkndsg</td>
+                    <td class="col-md-4">ksduhgkjgdh</td>
+                  </tr>
+                  <tr>
+                    <td class="col-md-4">sdhgldsg</td>
+                    <td class="col-md-4">kdsfuyglusdfh</td>
+                    <td class="col-md-4">dksuffushiudf</td>
+                  </tr>
+                  <tr>
+                    <td class="col-md-4">kdshgflujghsdu</td>
+                    <td class="col-md-4">dkjfhgj</td>
+                    <td class="col-md-4">jhgsdhskdg</td>
+                  </tr>
+                  <tr>
+                    <td class="col-md-4">kdshgflujghsdu</td>
+                    <td class="col-md-4">dkjfhgj</td>
+                    <td class="col-md-4">jhgsdhskdg</td>
+                  </tr>
+                  <tr>
+                    <td class="col-md-4">kdshgflujghsdu</td>
+                    <td class="col-md-4">dkjfhgj</td>
+                    <td class="col-md-4">jhgsdhskdg</td>
+                  </tr>
+                  <tr>
+                    <td class="col-md-4">kdshgflujghsdu</td>
+                    <td class="col-md-4">dkjfhgj</td>
+                    <td class="col-md-4">jhgsdhskdg</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <?php
+    }
+    ?>
   </div>
 </body>
 </html>
