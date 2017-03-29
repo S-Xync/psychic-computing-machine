@@ -88,44 +88,37 @@ mysqli_query($conn,$sql);
             }
             $sql2=$sql2." AND R.rank>='".$rank_from."' AND R.rank<='".$rank_to."'";
             $sql=$sql1." ".$sql2." GROUP BY R.rank ASC";
-            echo $sql;
+            $result=mysqli_query($conn,$sql);
+            $serial_no=0;
+            if(mysqli_num_rows($result)){
+              while($row=mysqli_fetch_assoc($result)){
+                $serial_no=$serial_no+1;
+                $rank=$row["rank"];
+                $site=$row["site"];
+                $country=$row["country"];
+                $computer=$row["computer"];
+                $manufacturer=$row["manufacturer"];
+                $total_cores=$row["total_cores"];
+                $power=$row["power"];
+                echo "<tr>
+                <td class=\"col-md-1\">$serial_no</td>
+                <td class=\"col-md-1\">$rank</td>
+                <td class=\"col-md-3\">$site<p><b>$country</b></p></td>
+                <td class=\"col-md-4\">$computer<p><b>$manufacturer</b></p></td>
+                <td class=\"col-md-2\">$total_cores</td>
+                <td class=\"col-md-1\">$power</td>
+                </tr>";
+              }
+            }
             ?>
-
-            <tr>
-              <td class="col-md-4">dskghfj</td>
-              <td class="col-md-4">dskughlkndsg</td>
-              <td class="col-md-4">ksduhgkjgdh</td>
-            </tr>
-            <tr>
-              <td class="col-md-4">sdhgldsg</td>
-              <td class="col-md-4">kdsfuyglusdfh</td>
-              <td class="col-md-4">dksuffushiudf</td>
-            </tr>
-            <tr>
-              <td class="col-md-4">kdshgflujghsdu</td>
-              <td class="col-md-4">dkjfhgj</td>
-              <td class="col-md-4">jhgsdhskdg</td>
-            </tr>
-            <tr>
-              <td class="col-md-4">kdshgflujghsdu</td>
-              <td class="col-md-4">dkjfhgj</td>
-              <td class="col-md-4">jhgsdhskdg</td>
-            </tr>
-            <tr>
-              <td class="col-md-4">kdshgflujghsdu</td>
-              <td class="col-md-4">dkjfhgj</td>
-              <td class="col-md-4">jhgsdhskdg</td>
-            </tr>
-            <tr>
-              <td class="col-md-4">kdshgflujghsdu</td>
-              <td class="col-md-4">dkjfhgj</td>
-              <td class="col-md-4">jhgsdhskdg</td>
-            </tr>
           </tbody>
         </table>
       </div>
     </div>
   </div>
+  <?php
+  echo "<h3>Sql Command :</h3><h4>$sql ;</h4>";
+?>
 </body>
 </html>
 <?php
