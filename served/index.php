@@ -221,11 +221,14 @@ mysqli_query($conn,$sql);
         </div>
         <br>
         <div class="row">
-          <div class="col-md-4"></div>
+          <div class="col-md-3"></div>
           <div class="form-group col-md-2" align="center">
-            <input type="submit" name="submit" value="Submit" id="submit_btn" class="btn btn-default btn-lg" onclick="javascript:return submit_btn_submit( document.getElementById('user_form').year.value, document.getElementById('user_form').country.value, document.getElementById('user_form').manufacturer.value, document.getElementById('user_form').processor_generation.value, document.getElementById('user_form').architecture.value, document.getElementById('user_form').segment.value, document.getElementById('user_form').interconnect_family.value, document.getElementById('user_form').accelerator.value, document.getElementById('user_form').operating_system_family.value, document.getElementById('user_form').rank_from.value, document.getElementById('user_form').rank_to.value )">
+            <input type="button" name="submit_form" value="Submit" id="submit_btn" class="btn btn-default btn-lg" onclick="javascript:return submit_btn_submit( document.getElementById('user_form').year.value, document.getElementById('user_form').country.value, document.getElementById('user_form').manufacturer.value, document.getElementById('user_form').processor_generation.value, document.getElementById('user_form').architecture.value, document.getElementById('user_form').segment.value, document.getElementById('user_form').interconnect_family.value, document.getElementById('user_form').accelerator.value, document.getElementById('user_form').operating_system_family.value, document.getElementById('user_form').rank_from.value, document.getElementById('user_form').rank_to.value )">
           </div>
-          <div class="col-md-6"></div>
+          <div class="form-group col-md-2" align="center">
+            <input type="button" name="reset_form" value="Reset" id="reset_btn" class="btn btn-warning btn-lg" onclick="javascript:return reset_btn_submit( document.getElementById('user_form'))">
+          </div>
+          <div class="col-md-5"></div>
         </div>
       </form>
     </div>

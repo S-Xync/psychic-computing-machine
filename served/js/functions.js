@@ -1,5 +1,4 @@
-function submit_btn_submit( year, country, manufacturer, processor_generation, architecture, segment, interconnect_family, accelerator, operating_system_family, rank_from, rank_to )
-{
+function submit_btn_submit( year, country, manufacturer, processor_generation, architecture, segment, interconnect_family, accelerator, operating_system_family, rank_from, rank_to ){
   if(rank_from.length==0 || rank_to.length==0){
     alert("Fields need to be filled!");
   }else{
@@ -19,4 +18,24 @@ function submit_btn_submit( year, country, manufacturer, processor_generation, a
     xmlhttp.send();
   }
   return false;//doesn't let page to refresh
+}
+
+function reset_btn_submit(user_form){
+  user_form.reset();
+  return false;
+}
+function rank_wise(rank){
+  return false;
+}
+function site_wise(site){
+  return false;
+}
+function country_wise(country){
+  return false;
+}
+function computer_wise(computer){
+  return false;
+}
+function manufacturer_wise(manufacturer){
+  return false;
 }
