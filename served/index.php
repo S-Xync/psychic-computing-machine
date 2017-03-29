@@ -232,7 +232,7 @@ mysqli_query($conn,$sql);
         </div>
       </form>
     </div>
-    <div id="result_table" class="container"><h2>Results table will be displayed here...</h2></div>
+    <div id="results" class="container"><h2>All types of results will be displayed here...</h2></div>
   </div>
 </body>
 </html>

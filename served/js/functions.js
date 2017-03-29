@@ -11,7 +11,7 @@ function submit_btn_submit( year, country, manufacturer, processor_generation, a
     }
     xmlhttp.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
-        document.getElementById("result_table").innerHTML = this.responseText;
+        document.getElementById("results").innerHTML = this.responseText;
       }
     };
     xmlhttp.open("GET","results_table.php?year=" + year + "&country=" + country + "&manufacturer=" + manufacturer + "&processor_generation=" + processor_generation + "&architecture=" + architecture + "&segment=" + segment + "&interconnect_family=" + interconnect_family + "&accelerator=" + accelerator + "&operating_system_family=" + operating_system_family + "&rank_from=" + rank_from + "&rank_to=" + rank_to, true);
@@ -24,18 +24,93 @@ function reset_btn_submit(user_form){
   user_form.reset();
   return false;
 }
+
 function rank_wise(rank){
+  if (window.XMLHttpRequest) {
+    // code for IE7+, Firefox, Chrome, Opera, Safari
+    xmlhttp = new XMLHttpRequest();
+  } else {
+    // code for IE6, IE5
+    xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+  }
+  xmlhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      document.getElementById("results").innerHTML = this.responseText;
+    }
+  };
+  xmlhttp.open("GET","about_computer.php?rank=" + rank, true);
+  xmlhttp.send();
   return false;
 }
+
 function site_wise(site){
+  if (window.XMLHttpRequest) {
+    // code for IE7+, Firefox, Chrome, Opera, Safari
+    xmlhttp = new XMLHttpRequest();
+  } else {
+    // code for IE6, IE5
+    xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+  }
+  xmlhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      document.getElementById("results").innerHTML = this.responseText;
+    }
+  };
+  xmlhttp.open("GET","site_wise.php?site=" + site, true);
+  xmlhttp.send();
   return false;
 }
+
 function country_wise(country){
+  if (window.XMLHttpRequest) {
+    // code for IE7+, Firefox, Chrome, Opera, Safari
+    xmlhttp = new XMLHttpRequest();
+  } else {
+    // code for IE6, IE5
+    xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+  }
+  xmlhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      document.getElementById("results").innerHTML = this.responseText;
+    }
+  };
+  xmlhttp.open("GET","country_wise.php?country=" + country, true);
+  xmlhttp.send();
   return false;
 }
+
 function computer_wise(computer){
+  if (window.XMLHttpRequest) {
+    // code for IE7+, Firefox, Chrome, Opera, Safari
+    xmlhttp = new XMLHttpRequest();
+  } else {
+    // code for IE6, IE5
+    xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+  }
+  xmlhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      document.getElementById("results").innerHTML = this.responseText;
+    }
+  };
+  xmlhttp.open("GET","computer_wise.php?computer=" + computer, true);
+  xmlhttp.send();
   return false;
 }
+
 function manufacturer_wise(manufacturer){
+  if (window.XMLHttpRequest) {
+    // code for IE7+, Firefox, Chrome, Opera, Safari
+    xmlhttp = new XMLHttpRequest();
+  } else {
+    // code for IE6, IE5
+    xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+  }
+  xmlhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      document.getElementById("results").innerHTML = this.responseText;
+    }
+  };
+  xmlhttp.open("GET","manufacturer_wise.php?manufacturer=" + manufacturer, true);
+  xmlhttp.send();
   return false;
 }

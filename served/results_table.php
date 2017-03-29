@@ -102,9 +102,9 @@ mysqli_query($conn,$sql);
           $power=$row["power"];
           echo "<tr>
           <td class=\"col-md-1 hover_cursor\"><div>$serial_no</div></td>
-          <td class=\"col-md-1 hover_cursor\"><div class=\"hover_changer\">$rank</div></td>
-          <td class=\"col-md-4 hover_cursor\"><div class=\"hover_changer\">$site</div><p><div class=\"hover_changer\"><b>$country</b></div></p></td>
-          <td class=\"col-md-4 hover_cursor\"><div class=\"hover_changer\">$computer</div><p><div class=\"hover_changer\"><b>$manufacturer</b></div></p></td>
+          <td class=\"col-md-1 hover_cursor\"><div class=\"hover_changer\" onclick=\"javascript:return rank_wise($rank)\">$rank</div></td>
+          <td class=\"col-md-4 hover_cursor\"><div class=\"hover_changer\" onclick=\"javascript:return site_wise($site)\">$site</div><p><div class=\"hover_changer\" onclick=\"javascript:return country_wise($country)\"><b>$country</b></div></p></td>
+          <td class=\"col-md-4 hover_cursor\"><div class=\"hover_changer\" onclick=\"javascript:return computer_wise($computer)\">$computer</div><p><div class=\"hover_changer\" onclick=\"javascript:return manufacturer_wise($manufacturer)\"><b>$manufacturer</b></div></p></td>
           <td class=\"col-md-1 hover_cursor\"><div>$total_cores</div></td>
           <td class=\"col-md-1 hover_cursor\"><div>$power</div></td>
           </tr>";
