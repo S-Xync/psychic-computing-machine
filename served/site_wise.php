@@ -22,11 +22,18 @@ mysqli_query($conn,$sql);
   <div class="row">
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h4>Computers From Same Site!</h4>
+        <h4>Computers From The Same Site!</h4>
       </div>
       <?php
       $rank=$_GET["rank"];
-      
+      $sql="SELECT D.site,L.country FROM details D,ranks R,locations L WHERE R.green_rank=D.green_rank D.location_id=L.location_id AND R.rank='".$rank."'";
+      $result=mysqli_query($conn,$sql);
+      if(mysqli_num_rows($result)==1){
+        $row=mysqli_fetch_assoc($result);
+        $site=$row["site"];
+        $country=$row["country"];
+      }
+      // $sql="SELECT R.rank,D.year,D.manufacturer,D.computer,N.total_cores,N.power,N.rmax,N.rpeak FROM ranks R, details D,numbers N,locations L WHERE L.country"
       ?>
     </div>
   </div>
