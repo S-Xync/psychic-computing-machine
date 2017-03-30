@@ -19,6 +19,17 @@ mysqli_query($conn,$sql);
   <script type="text/javascript" src="js/functions.js"></script>
 </head>
 <body>
+  <div class="row">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4>Computers From Same Site!</h4>
+      </div>
+      <?php
+      $rank=$_GET["rank"];
+      
+      ?>
+    </div>
+  </div>
 </body>
 </html>
 <?php

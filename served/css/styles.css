@@ -1,12 +1,15 @@
 .below-navbar-fixed-top{
   margin-top: 50px;
 }
-.hover_cursor>.hover_changer{
+.hover_cursor{
   cursor: pointer;
 }
-.hover_cursor:hover{
+.hover_block:hover{
   background-color: rgba(0,0,0,0.1);
 }
 /*.hover_cursor>.hover_changer:hover{
     background-color: rgba(0,0,0,0.15);
+}*/
+/*.hover_cursor>.hover_changer{
+  cursor: pointer;
 }*/

@@ -101,12 +101,12 @@ mysqli_query($conn,$sql);
           $total_cores=$row["total_cores"];
           $power=$row["power"];
           echo "<tr>
-          <td class=\"col-md-1 hover_cursor\"><div>$serial_no</div></td>
-          <td class=\"col-md-1 hover_cursor\"><div class=\"hover_changer\" onclick=\"javascript:return rank_wise($rank)\">$rank</div></td>
-          <td class=\"col-md-4 hover_cursor\"><div class=\"hover_changer\" onclick=\"javascript:return site_wise($rank)\">$site</div><p><div class=\"hover_changer\" onclick=\"javascript:return country_wise($rank)\"><b>$country</b></div></p></td>
-          <td class=\"col-md-4 hover_cursor\"><div class=\"hover_changer\" onclick=\"javascript:return computer_wise($rank)\">$computer</div><p><div class=\"hover_changer\" onclick=\"javascript:return manufacturer_wise($rank)\"><b>$manufacturer</b></div></p></td>
-          <td class=\"col-md-1 hover_cursor\"><div>$total_cores</div></td>
-          <td class=\"col-md-1 hover_cursor\"><div>$power</div></td>
+          <td class=\"col-md-1 hover_block\"><div>$serial_no</div></td>
+          <td class=\"col-md-1 hover_block hover_cursor\" onclick=\"javascript:return rank_wise($rank)\">$rank</td>
+          <td class=\"col-md-4 hover_block hover_cursor\" onclick=\"javascript:return site_wise($rank)\">$site<p><b>$country</b></p></td>
+          <td class=\"col-md-4 hover_block hover_cursor\" onclick=\"javascript:return computer_wise($rank)\">$computer<p><b>$manufacturer</b></p></td>
+          <td class=\"col-md-1 hover_block\">$total_cores</td>
+          <td class=\"col-md-1 hover_block\">$power</td>
           </tr>";
         }
         echo "</tbody>
