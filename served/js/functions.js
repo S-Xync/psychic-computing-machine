@@ -43,7 +43,7 @@ function rank_wise(rank){
   return false;
 }
 
-function site_wise(site){
+function site_wise(rank){
   if (window.XMLHttpRequest) {
     // code for IE7+, Firefox, Chrome, Opera, Safari
     xmlhttp = new XMLHttpRequest();
@@ -56,12 +56,12 @@ function site_wise(site){
       document.getElementById("results").innerHTML = this.responseText;
     }
   };
-  xmlhttp.open("GET","site_wise.php?site=" + site, true);
+  xmlhttp.open("GET","site_wise.php?rank=" + rank, true);
   xmlhttp.send();
   return false;
 }
 
-function country_wise(country){
+function country_wise(rank){
   if (window.XMLHttpRequest) {
     // code for IE7+, Firefox, Chrome, Opera, Safari
     xmlhttp = new XMLHttpRequest();
@@ -74,12 +74,12 @@ function country_wise(country){
       document.getElementById("results").innerHTML = this.responseText;
     }
   };
-  xmlhttp.open("GET","country_wise.php?country=" + country, true);
+  xmlhttp.open("GET","country_wise.php?rank=" + rank, true);
   xmlhttp.send();
   return false;
 }
 
-function computer_wise(computer){
+function computer_wise(rank){
   if (window.XMLHttpRequest) {
     // code for IE7+, Firefox, Chrome, Opera, Safari
     xmlhttp = new XMLHttpRequest();
@@ -92,12 +92,12 @@ function computer_wise(computer){
       document.getElementById("results").innerHTML = this.responseText;
     }
   };
-  xmlhttp.open("GET","computer_wise.php?computer=" + computer, true);
+  xmlhttp.open("GET","computer_wise.php?rank=" + rank, true);
   xmlhttp.send();
   return false;
 }
 
-function manufacturer_wise(manufacturer){
+function manufacturer_wise(rank){
   if (window.XMLHttpRequest) {
     // code for IE7+, Firefox, Chrome, Opera, Safari
     xmlhttp = new XMLHttpRequest();
@@ -110,7 +110,7 @@ function manufacturer_wise(manufacturer){
       document.getElementById("results").innerHTML = this.responseText;
     }
   };
-  xmlhttp.open("GET","manufacturer_wise.php?manufacturer=" + manufacturer, true);
+  xmlhttp.open("GET","manufacturer_wise.php?rank=" + rank, true);
   xmlhttp.send();
   return false;
 }
