@@ -30,26 +30,26 @@ mysqli_query($conn,$sql);
       $result=mysqli_query($conn,$sql);
       if (mysqli_num_rows($result)==1) {
         $row=mysqli_fetch_assoc($result);
-        $machine=$row["machine"];//
-        $computer=$row["computer"];//
-        $site=$row["site"];//
-        $manufacturer=$row["manufacturer"];//
-        $country=$row["country"];//
-        $year=$row["year"];//
-        $power_source=$row["power_source"];//
-        $architecture=$row["architecture"];//
-        $processor=$row["processor"];//
+        $machine=$row["machine"];
+        $computer=$row["computer"];
+        $site=$row["site"];
+        $manufacturer=$row["manufacturer"];
+        $country=$row["country"];
+        $year=$row["year"];
+        $power_source=$row["power_source"];
+        $architecture=$row["architecture"];
+        $processor=$row["processor"];
         $processor_speed=$row["processor_speed"];
-        $operating_system=$row["operating_system"];//
-        $accelerator=$row["accelerator"];//
-        $system_model=$row["system_model"];//
-        $interconnect=$row["interconnect"];//
-        $total_cores=$row["total_cores"];//
-        $accelerator_cores=$row["accelerator_cores"];//
+        $operating_system=$row["operating_system"];
+        $accelerator=$row["accelerator"];
+        $system_model=$row["system_model"];
+        $interconnect=$row["interconnect"];
+        $total_cores=$row["total_cores"];
+        $accelerator_cores=$row["accelerator_cores"];
         $rmax=$row["rmax"];
         $rpeak=$row["rpeak"];
         $nmax=$row["nmax"];
-        $power=$row["power"];//
+        $power=$row["power"];
         $mflops_per_watt=$row["mflops_per_watt"];
 
         echo "<h2 align=\"center\" class=\"hover_cursor\" onclick=\"javascript:return computer_wise($rank)\">$computer</h2>";
@@ -57,6 +57,10 @@ mysqli_query($conn,$sql);
         echo "<div class=\"container table-responsive\">
         <table class=\"table table-hover table-condensed\">
         <tbody>";
+
+        echo "<tr>
+        <th class=\"col-md-5\">Rank</th><td class=\"col-md-7\">$rank</td>
+        </tr>";
 
         if($machine===null){
           echo "<tr>
@@ -119,11 +123,15 @@ mysqli_query($conn,$sql);
         </tr>";
 
         echo "<tr>
+        <th class=\"col-md-5\">Processor Speed</th><td class=\"col-md-7\">$processor_speed Ghz</td>
+        </tr>";
+
+        echo "<tr>
         <th class=\"col-md-5\">Power (Power Source)</th><td class=\"col-md-7\">$power kW ($power_source)</td>
         </tr>";
 
         echo "<tr>
-        <th class=\"col-md-5\">Processor Speed</th><td class=\"col-md-7\">$processor_speed Ghz</td>
+        <th class=\"col-md-5\">Performance per Watt</th><td class=\"col-md-7\">$mflops_per_watt MFLOPS/watt</td>
         </tr>";
 
         echo "<tr>
@@ -136,10 +144,6 @@ mysqli_query($conn,$sql);
 
         echo "<tr>
         <th class=\"col-md-5\">Nmax</th><td class=\"col-md-7\">$nmax</td>
-        </tr>";
-
-        echo "<tr>
-        <th class=\"col-md-5\">Performance per Watt</th><td class=\"col-md-7\">$mflops_per_watt MFLOPS/watt</td>
         </tr>";
 
         echo "</tbody>
