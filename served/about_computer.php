@@ -26,7 +26,7 @@ mysqli_query($conn,$sql);
       </div>
       <?php
       $rank=$_GET["rank"];
-      $sql="SELECT D.machine,D.computer,D.site,D.manufacturer,L.country,D.year,D.power_source,G.architecture,G.processor,G.processor_speed,G.operating_system,G.accelerator,G.system_model,G.interconnect,N.total_cores,N.accelerator_cores,N.rmax,N.rpeak,N.nmax,N.power,N.mflops_per_watt FROM details D,ranks R,locations L,geeky_details G,numbers N WHERE R.rank='".$rank."' AND R.green_rank=D.green_rank AND D.location_id=L.location_id AND D.green_rank=G.green_rank AND G.green_rank=N.green_rank";
+      $sql="SELECT D.machine, D.computer, D.site, D.manufacturer, L.country, D.year, D.power_source, G.architecture, G.processor, G.processor_speed, G.operating_system, G.accelerator, G.system_model, G.interconnect, N.total_cores, N.accelerator_cores, N.rmax, N.rpeak, N.nmax, N.power, N.mflops_per_watt FROM details D, ranks R, locations L, geeky_details G, numbers N WHERE R.rank = '".$rank."' AND R.green_rank = D.green_rank AND D.location_id = L.location_id AND D.green_rank = G.green_rank AND G.green_rank = N.green_rank";
       $result=mysqli_query($conn,$sql);
       if (mysqli_num_rows($result)==1) {
         $row=mysqli_fetch_assoc($result);
@@ -155,6 +155,9 @@ mysqli_query($conn,$sql);
       ?>
     </div>
   </div>
+  <?php
+  echo "<h3>Sql Command :</h3><h4>$sql ;</h4>";
+  ?>
 </body>
 </html>
 <?php

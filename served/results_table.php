@@ -36,45 +36,45 @@ mysqli_query($conn,$sql);
       $operating_system_family=$_GET["operating_system_family"];
       $rank_from=$_GET["rank_from"];
       $rank_to=$_GET["rank_to"];
-      $sql1="SELECT R.rank,D.site,L.country,D.computer,D.manufacturer,N.total_cores,N.power FROM details D,locations L,numbers N,ranks R";
-      $sql2="WHERE R.green_rank=D.green_rank AND L.location_id=D.location_id AND D.green_rank=N.green_rank";
+      $sql1="SELECT R.rank, D.site, L.country, D.computer, D.manufacturer, N.total_cores, N.power FROM details D, locations L, numbers N, ranks R";
+      $sql2="WHERE R.green_rank = D.green_rank AND L.location_id = D.location_id AND D.green_rank = N.green_rank";
       if(strcmp($processor_generation,"All")!=0 || strcmp($architecture,"All")!=0 || strcmp($interconnect_family,"All")!=0 || strcmp($accelerator,"All")!=0 || strcmp($operating_system_family,"All")!=0){
-        $sql1=$sql1.",geeky_details G";
-        $sql2=$sql2." AND G.green_rank=N.green_rank";
+        $sql1=$sql1.", geeky_details G";
+        $sql2=$sql2." AND G.green_rank = N.green_rank";
       }
       if(strcmp($year,"All")!=0){
-        $sql2=$sql2." AND D.year='".$year."'";
+        $sql2=$sql2." AND D.year = '".$year."'";
       }
       if(strcmp($country,"All")!=0){
-        $sql2=$sql2." AND L.country='".$country."'";
+        $sql2=$sql2." AND L.country = '".$country."'";
       }
       if(strcmp($manufacturer,"All")!=0){
-        $sql2=$sql2." AND D.manufacturer='".$manufacturer."'";
+        $sql2=$sql2." AND D.manufacturer = '".$manufacturer."'";
       }
       if(strcmp($processor_generation,"All")!=0){
-        $sql2=$sql2." AND G.processor_generation='".$processor_generation."'";
+        $sql2=$sql2." AND G.processor_generation = '".$processor_generation."'";
       }
       if(strcmp($segment,"All")!=0){
-        $sql2=$sql2." AND D.segment='".$segment."'";
+        $sql2=$sql2." AND D.segment = '".$segment."'";
       }
       if(strcmp($architecture,"All")!=0){
-        $sql2=$sql2." AND G.architecture='".$architecture."'";
+        $sql2=$sql2." AND G.architecture = '".$architecture."'";
       }
       if(strcmp($interconnect_family,"All")!=0){
-        $sql2=$sql2." AND G.interconnect_family='".$interconnect_family."'";
+        $sql2=$sql2." AND G.interconnect_family = '".$interconnect_family."'";
       }
       if(strcmp($accelerator,"All")!=0){
         if(strcmp($accelerator,"Null")==0){
           $sql2=$sql2." AND G.accelerator IS NULL";
         }else{
-          $sql2=$sql2." AND G.accelerator='".$accelerator."'";
+          $sql2=$sql2." AND G.accelerator = '".$accelerator."'";
         }
       }
       if(strcmp($operating_system_family,"All")!=0){
-        $sql2=$sql2." AND G.operating_system_family='".$operating_system_family."'";
+        $sql2=$sql2." AND G.operating_system_family = '".$operating_system_family."'";
       }
       $sql2=$sql2." AND R.rank>='".$rank_from."' AND R.rank<='".$rank_to."'";
-      $sql=$sql1." ".$sql2." GROUP BY R.rank ASC";
+      $sql=$sql1." ".$sql2." ORDER BY R.rank ASC";
       $result=mysqli_query($conn,$sql);
       $serial_no=0;
       if(mysqli_num_rows($result)>0){
@@ -101,7 +101,7 @@ mysqli_query($conn,$sql);
           $total_cores=$row["total_cores"];
           $power=$row["power"];
           echo "<tr>
-          <td class=\"col-md-1 hover_block\"><div>$serial_no</div></td>
+          <td class=\"col-md-1 hover_block\">$serial_no</td>
           <td class=\"col-md-1 hover_block hover_cursor\" onclick=\"javascript:return rank_wise($rank)\">$rank</td>
           <td class=\"col-md-4 hover_block hover_cursor\" onclick=\"javascript:return site_wise($rank)\">$site<p><b>$country</b></p></td>
           <td class=\"col-md-4 hover_block hover_cursor\" onclick=\"javascript:return computer_wise($rank)\">$computer<p><b>$manufacturer</b></p></td>
