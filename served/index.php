@@ -12,6 +12,7 @@ mysqli_query($conn,$sql);
 <html>
 <head>
   <meta charset="utf-8">
+  <link href="favicon.ico" rel="icon" type="image/x-icon"/>
   <title>Psychic Computing Machine</title>
   <link rel="stylesheet" href="css/bootstrap-cosmo.min.css">
   <link rel="stylesheet" href="css/styles.css">
