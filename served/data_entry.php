@@ -142,8 +142,12 @@ body
         echo "Error inserting rows into database ".$dbname."\r\n\n";
       }
       // insert into locations table
-      $sql="INSERT INTO locations (country,region,continent) VALUES ('".$country."','".$region."','".$continent."')";
-      mysqli_query($conn,$sql);
+      $sql="SELECT * FROM locations WHERE country='".$country."'";
+      $result=mysqli_query($conn,$sql);
+      if(mysqli_num_rows($result)==0){
+        $sql="INSERT INTO locations (country,region,continent) VALUES ('".$country."','".$region."','".$continent."')";
+        mysqli_query($conn,$sql);
+      }
       // retrieve location_id from locations table
       $sql="SELECT location_id FROM locations WHERE country='".$country."'";
       $result=mysqli_query($conn,$sql);
