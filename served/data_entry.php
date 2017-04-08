@@ -141,13 +141,15 @@ body
       }else{
         echo "Error inserting rows into database ".$dbname."\r\n\n";
       }
+      mysqli_free_result($result);
       // insert into locations table
       $sql="SELECT * FROM locations WHERE country='".$country."'";
       $result=mysqli_query($conn,$sql);
-      if(mysqli_num_rows($result)==0){
+      if(mysqli_num_rows($result)==0){//checking if same country is there in the table
         $sql="INSERT INTO locations (country,region,continent) VALUES ('".$country."','".$region."','".$continent."')";
         mysqli_query($conn,$sql);
       }
+      mysqli_free_result($result);
       // retrieve location_id from locations table
       $sql="SELECT location_id FROM locations WHERE country='".$country."'";
       $result=mysqli_query($conn,$sql);
@@ -157,6 +159,7 @@ body
       }else{
         echo "Error inserting rows into database ".$dbname."\r\n\n";
       }
+      mysqli_free_result($result);
       // insert into details table
       if(strlen($machine)==0){
         $sql="INSERT INTO details (green_rank,computer,site,manufacturer,location_id,year,segment,power_source) VALUES ('".$green_rank."','".$computer."','".$site."','".$manufacturer."','".$location_id."','".$year."','".$segment."','".$power_source."')";
@@ -185,7 +188,7 @@ body
       }
     }
 
-    if(isset($_POST["submitb"])){//ajax post request for bulk loading
+    if(isset($_POST["submitb"])){//request for bulk loading
       if(strcmp($_SESSION["user"],"admin")==0){
         $file = $_FILES['file']['tmp_name'];//uploaded file is temporarily stored
         $handle = fopen($file, "r");
@@ -391,7 +394,7 @@ body
       </table>
     </form>
     <?php
-    if(isset($_POST["submitr"])){
+    if(isset($_POST["submitr"])){//request for row wise loading
       if(strcmp($_SESSION["user"],"admin")==0){
         $rank = $_POST["rank"];
         $previous_rank = $_POST["previous_rank"];

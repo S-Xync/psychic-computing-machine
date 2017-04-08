@@ -90,30 +90,32 @@ body
           <td align="left"><input type="submit" name="login" value="Login" /></td>
         </tr>
       </table>
-      <!-- Username: <input type="text" name="user" required/><br /> -->
-      <!-- Password: <input type="password" name="pass" required/><br /> -->
-      <!-- <input type="submit" name="login" value="Login" /> -->
     </form>
     <?php
-    if(isset($_POST["login"])){//ajax request
+    if(isset($_POST["login"])){//when login button is clicked
       $username=$_POST["user"];
       $password=$_POST["pass"];
-      $sql="SELECT hash_password from users WHERE username='".$username."'";
-      $result=mysqli_query($conn,$sql);
-      if(mysqli_num_rows($result)==1){
-        $row = mysqli_fetch_assoc($result);
-        $hash_password=$row["hash_password"];
-        if(password_verify($password,$hash_password)){
-          $_SESSION["user"]="admin";
-          header('Location: data_entry.php');
-          exit;
+      $sql="SELECT hash_password from users WHERE username=?";
+      $stmt=mysqli_stmt_init($conn);
+      if(mysqli_stmt_prepare($stmt,$sql)){
+        mysqli_stmt_bind_param($stmt,"s",$username);
+        mysqli_stmt_execute($stmt);
+        $result=mysqli_stmt_get_result($stmt);
+        if(mysqli_num_rows($result)==1){
+          $row = mysqli_fetch_array($result,MYSQLI_BOTH);//numbers and also variables
+          $hash_password=$row["hash_password"];
+          if(password_verify($password,$hash_password)){
+            $_SESSION["user"]="admin";
+            header('Location: data_entry.php');
+            exit;
+          }else{
+            echo "User Authentication Failed\n";
+          }
         }else{
-          echo "User Authentication Failed\n";
+          echo "Username Error\r\n";
         }
-      }else{
-        echo "Username Error\r\n";
+        mysqli_free_result($result);
       }
-
     }
     ?>
   </body>
