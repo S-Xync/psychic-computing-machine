@@ -161,5 +161,6 @@ mysqli_query($conn,$sql);
 </body>
 </html>
 <?php
+mysqli_free_result($result);
 mysqli_close($conn);
 ?>
