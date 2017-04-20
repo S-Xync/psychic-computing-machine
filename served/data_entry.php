@@ -2,10 +2,10 @@
 /* SaiKumar Immadi */
 // Start the session
 session_start();
-$server = "localhost";
-$username = "myuser";
-$password = "mypassword";
-$dbname = "pcm";
+$server = 'localhost';
+$username = 'myuser';
+$password = 'mypassword';
+$dbname = 'pcm';
 // creates connection
 $conn=mysqli_connect($server,$username,$password);
 
